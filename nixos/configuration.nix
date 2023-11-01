@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -47,17 +47,38 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
+  # Configure desktop environment.
   services.xserver = {
+    enable = true;
     layout = "us";
     xkbVariant = "";
+    videoDrivers = ["nvidia"];
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+    desktopManager.gnome = {
+      enable = true;
+    };
+  };
+
+  # programs.hyprland = {
+  #   enable = true;
+  #   enableNvidiaPatches = true;
+  #   xwayland.enable = true;
+  # };
+  
+  # xdg.portal.enable = true;
+  # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+
+  # Enable automatic login for the user.
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "nigel";
+
+
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
   # Enable CUPS to print documents.
@@ -94,9 +115,15 @@
     ];
   };
 
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "nigel";
+  # programs.firefox = {
+  #   profiles.nigel = {
+  #     extensions = [
+  #       inputs.firefox-addons.packages."x86_64-linux".ublock-origin
+  #       inputs.firefox-addons.packages."x86_64-linux".vimium
+  #     ];
+  #   };
+  # };
+
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
@@ -111,14 +138,27 @@
       vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       wget
       git
+      # For desktop environment.
+      # waybar
+      # (waybar.overrideAttrs (oldAttrs : {
+      #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      # }))
+
+      # dunst
+      # libnotify
+
+      # swww
+
+      # kitty
+
+      # rofi-wayland
   ];
+
   hardware.opengl = {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
   };
-  
-  services.xserver.videoDrivers = ["nvidia"];
   
   hardware.nvidia = {
       modesetting.enable = true;
@@ -160,5 +200,4 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
 }
