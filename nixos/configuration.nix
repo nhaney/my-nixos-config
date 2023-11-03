@@ -47,20 +47,35 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure desktop environment.
+  # Configure desktop environment (xfce + i3).
   services.xserver = {
     enable = true;
     layout = "us";
     xkbVariant = "";
     videoDrivers = ["nvidia"];
-    displayManager.gdm = {
+    displayManager.defaultSession = "xfce+i3";
+    windowManager.i3 = {
       enable = true;
-      wayland = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+        i3blocks
+      ];
     };
-    desktopManager.gnome = {
-      enable = true;
+    desktopManager = {
+      xterm.enable = false;
+      xfce = {
+        enable = true;
+        noDesktop = true;
+        enableXfwm = false;
+      };
     };
   };
+
+  # Needed for i3blocks.
+  environment.pathsToLink = [ "/libexec" ];
 
   # programs.hyprland = {
   #   enable = true;
@@ -72,14 +87,16 @@
   # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "nigel";
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "nigel";
 
 
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-    NIXOS_OZONE_WL = "1";
-  };
+  # environment.sessionVariables = {
+  #   WLR_NO_HARDWARE_CURSORS = "1";
+  #   NIXOS_OZONE_WL = "1";
+  # };
+
+
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
