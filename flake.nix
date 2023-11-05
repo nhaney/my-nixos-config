@@ -2,14 +2,18 @@
   description = "NixOS and home-manager configurations for my machines.";
 
   inputs = {
-    # Nixpkgs url that I use.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    # Nixpkgs input, define version of nixpkgs to use.
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-23.05";
+    };
     
-    # Used for installing home manager.
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Home manager input, define which version of home manager to use and which nixpkgs it should use.
+    home-manager = {
+      url = "github:nix-community/home-manager/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # Used for firefox plugins.
+    # Firefox addons input, define 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +51,7 @@
     };
 
     # My standalone home-manager configurations.
-    # To run: home-manager --flake .#your-username@your-hostname
+    # To run: home-manager switch --flake .#your-username@your-hostname
     homeConfigurations = {
       "nigel@desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
