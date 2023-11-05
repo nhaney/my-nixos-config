@@ -156,6 +156,7 @@
       wget
       git
       curl
+      home-manager
       # For desktop environment.
       # waybar
       # (waybar.overrideAttrs (oldAttrs : {
@@ -189,6 +190,7 @@
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
