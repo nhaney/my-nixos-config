@@ -1,6 +1,16 @@
 { inputs, lib, config, pkgs, ... }:
 
 {
+  nixpkgs = {
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
+    };
+  };
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nigel";
@@ -21,6 +31,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     pkgs.neovim
+    pkgs.dotnet-sdk_8
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -79,5 +90,16 @@
         vimium
       ];
     };
+  };
+
+  # VSCode + extensions
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      vscodevim.vim
+      yzhang.markdown-all-in-one
+      ionide.ionide-fsharp
+    ];
   };
 }
