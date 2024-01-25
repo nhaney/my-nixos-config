@@ -4,12 +4,12 @@
   inputs = {
     # Nixpkgs input, define version of nixpkgs to use.
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-23.05";
+      url = "github:nixos/nixpkgs/nixos-unstable";
     };
     
     # Home manager input, define which version of home manager to use and which nixpkgs it should use.
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -19,6 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Nixvim input, used for configuring neovim.
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,6 +65,7 @@
         modules = [
           ./home-manager/firefox.nix
           ./home-manager/vscode.nix
+          ./home-manager/vim.nix
           ./home-manager/home.nix
         ];
       };

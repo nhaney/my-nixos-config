@@ -77,12 +77,6 @@
   # Needed for i3blocks.
   environment.pathsToLink = [ "/libexec" ];
 
-  # programs.hyprland = {
-  #   enable = true;
-  #   enableNvidiaPatches = true;
-  #   xwayland.enable = true;
-  # };
-  
   # xdg.portal.enable = true;
   # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
@@ -90,12 +84,20 @@
   # services.xserver.displayManager.autoLogin.enable = true;
   # services.xserver.displayManager.autoLogin.user = "nigel";
 
-
   # environment.sessionVariables = {
   #   WLR_NO_HARDWARE_CURSORS = "1";
   #   NIXOS_OZONE_WL = "1";
   # };
 
+  fonts.packages = with pkgs; [
+    noto-fonts
+    (nerdfonts.override {
+      fonts = [
+        "DejaVuSansMono"
+        "UbuntuMono"
+      ];
+    })
+  ];
 
 
   # Enable CUPS to print documents.
