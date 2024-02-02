@@ -32,6 +32,9 @@
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
+  # This fixes dual boot time issue with Windows.
+  time.hardwareClockInLocalTime = true;
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -47,13 +50,23 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure desktop environment (xfce + i3).
+  # Configure GUI desktop environment (i3).
   services.xserver = {
     enable = true;
     layout = "us";
     xkbVariant = "";
     videoDrivers = ["nvidia"];
-    displayManager.defaultSession = "xfce+i3";
+
+    displayManager = {
+      defaultSession = "none+i3";
+      autoLogin.enable = true;
+      autoLogin.user = "nigel";
+      # Set up primary ultrawide monitor with correct resolution and position.
+      setupCommands = ''
+      ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
+      '';
+    };
+
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -64,15 +77,13 @@
         i3blocks
       ];
     };
+
     desktopManager = {
       xterm.enable = false;
-      xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-      };
     };
   };
+
+  programs.dconf.enable = true;
 
   # Needed for i3blocks.
   environment.pathsToLink = [ "/libexec" ];
@@ -91,10 +102,15 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
     (nerdfonts.override {
       fonts = [
-        "DejaVuSansMono"
-        "UbuntuMono"
+        "FiraCode"
+        "DroidSansMono"
       ];
     })
   ];
@@ -127,7 +143,7 @@
   users.users.nigel = {
     isNormalUser = true;
     description = "Nigel Haney";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
     #  thunderbird
@@ -149,20 +165,7 @@
       git
       curl
       home-manager
-      # For desktop environment.
-      # waybar
-      # (waybar.overrideAttrs (oldAttrs : {
-      #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      # }))
-
-      # dunst
-      # libnotify
-
-      # swww
-
-      # kitty
-
-      # rofi-wayland
+      alacritty
   ];
 
   hardware.opengl = {
@@ -212,4 +215,6 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  virtualisation.docker.enable = true;
 }

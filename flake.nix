@@ -63,10 +63,8 @@
         
         # Home manager modules used.
         modules = [
-          ./home-manager/firefox.nix
-          ./home-manager/vscode.nix
-          ./home-manager/vim.nix
-          ./home-manager/home.nix
+          ./home-manager/common
+          ./home-manager/desktop
         ];
       };
     };
