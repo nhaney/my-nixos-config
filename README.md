@@ -6,7 +6,7 @@ This repo contains my NixOS config for my machines and home manager configs for 
 
 ### NixOS
 
-* [ ] Fix Windows time.
+* [x] Fix Windows time.
 * [ ] Use only i3 without a desktop environment
     * [x] Install alacritty terminal
     * [ ] Install fonts

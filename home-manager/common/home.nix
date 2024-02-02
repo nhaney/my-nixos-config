@@ -1,15 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, config, modulesPath, ... }:
 {
-  # nixpkgs = {
-  #   # Configure your nixpkgs instance
-  #   config = {
-  #     # Disable if you don't want unfree packages
-  #     allowUnfree = true;
-  #     # Workaround for https://github.com/nix-community/home-manager/issues/2942
-  #     allowUnfreePredicate = _: true;
-  #   };
-  # };
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nigel";
@@ -52,6 +42,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    "testfile.txt".text = "Test file in ${config.home.username}'s home directory! Generated with a flake in module path ${modulesPath}.";
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
