@@ -1,0 +1,19 @@
+---
+scheme: Generated
+author: Flavours
+base00: e7e5de
+base01: c3bdb5
+base02: 9e958d
+base03: 7a6c64
+base04: 56443c
+base05: 311b13
+base06: 2a1710
+base07: 22130d
+base08: 5b5281
+base09: "635271"
+base0A: "645179"
+base0B: "595956"
+base0C: "595956"
+base0D: 61615d
+base0E: 6a5d6b
+base0F: 7d4c44
