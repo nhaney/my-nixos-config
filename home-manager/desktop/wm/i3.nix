@@ -21,6 +21,9 @@ in
     xclip
     # Used for lock screen
     i3lock
+
+    # Used to generate base16 color schemes.
+    flavours
   ];
 
   # Enable rofi. Used to run programs from i3.
