@@ -1,13 +1,17 @@
 { pkgs, ... }:
 
 let
-  modifier = "Mod4";
-  workspace = {
-    dev = "dev";
-    extra = "extra";
-  };
+  ws1 = "1";
+  ws2 = "2";
+  ws3 = "3";
+  ws4 = "4";
+  ws5 = "5";
+  ws6 = "6";
+  ws7 = "7";
+  ws8 = "8";
+  ws9 = "9";
 
-  opaqueWindows = [ "Rofi" "firefox" ];
+  opaqueWindows = [ "Rofi" "firefox" "i3lock" ];
 in
 {
   home.packages = with pkgs; [
@@ -15,8 +19,8 @@ in
     feh
     # Used for cliboard.
     xclip
-    # Dependency of picom.
-    pcre.dev
+    # Used for lock screen
+    i3lock
   ];
 
   # Enable rofi. Used to run programs from i3.
@@ -57,6 +61,7 @@ in
     activeOpacity = 1.0;
     inactiveOpacity = 0.95;
     fade = true;
+    backend = "glx";
 
     opacityRules = map (window: "100:class_g *?= '${window}'") opaqueWindows;
 
@@ -65,6 +70,12 @@ in
       rounded-corners-exclude = [
         "class_i = 'polybar'"
       ];
+      blur = {
+        method = "dual_kawase";
+	strength = 3;
+	background = true;
+	frame = true;
+      };
     };
   };
 
@@ -76,33 +87,44 @@ in
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      config = {
-        inherit modifier;
+
+      config = rec {
+        modifier = "Mod4";
+
+        fonts = {
+          names = [ "FiraCode" ];
+          style = "Bold";
+          size = 10.0;
+        };
 
         bars = [ ];
 
-        window = {
-          border = 0;
-          hideEdgeBorders = "both";
-        };
+        #window = {
+        #  border = 0;
+        #  hideEdgeBorders = "both";
+        #};
 
         gaps = {
           inner = 10;
           outer = 5;
         };
 
+
         keybindings = {
-          # Alacritty terminal
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+          # General control
 
-          # Rofi
-          "${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
+          ## Workspaces
+          "${modifier}+1" = "workspace number ${ws1}";
+          "${modifier}+2" = "workspace number ${ws2}";
+          "${modifier}+3" = "workspace number ${ws3}";
+          "${modifier}+4" = "workspace number ${ws4}";
+          "${modifier}+5" = "workspace number ${ws5}";
+          "${modifier}+6" = "workspace number ${ws6}";
+          "${modifier}+7" = "workspace number ${ws7}";
+          "${modifier}+8" = "workspace number ${ws8}";
+          "${modifier}+9" = "workspace number ${ws9}";
 
-          # Screenshot
-          "${modifier}+shift+s" = "exec ${pkgs.flameshot}/bin/flameshot gui -c";
-          "${modifier}+shift+a" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-
-          # Movement
+          ## Focus movement
           "${modifier}+j" = "focus down";
           "${modifier}+k" = "focus up";
           "${modifier}+h" = "focus left";
@@ -113,28 +135,58 @@ in
           "${modifier}+Left" = "focus left";
           "${modifier}+Right" = "focus right";
 
-          # Workspaces
-          # "${modifier}+space" = "workspace ${workspace.terminal}";
-          # "${modifier}+m" = "workspace ${workspace.code}";
-          # "${modifier}+comma" = "workspace ${workspace.browser}";
-          # "${modifier}+period" = "workspace ${workspace.bitwarden}";
-          # "${modifier}+slash" = "workspace ${workspace.spotify}";
-          # "${modifier}+u" = "workspace ${workspace.discord}";
-          # "${modifier}+i" = "workspace ${workspace.signal}";
-          # "${modifier}+o" = "workspace ${workspace.ledger}";
-          # "${modifier}+p" = "workspace ${workspace.extra}";
-          # "${modifier}+bracketright" = "workspace ${workspace.steam}";
-          # "${modifier}+backslash" = "workspace ${workspace.steam-app}";
+          ## Window manipulation
 
-          # Misc
-          "${modifier}+shift+q" = "kill";
+          "${modifier}+Shift+j" = "move down";
+          "${modifier}+Shift+k" = "move up";
+          "${modifier}+Shift+h" = "move left";
+          "${modifier}+Shift+l" = "move right";
+
+          "${modifier}+Shift+Down" = "move down";
+          "${modifier}+Shift+Up" = "move up";
+          "${modifier}+Shift+Left" = "move left";
+          "${modifier}+Shift+Right" = "move right";
+
+          "${modifier}+Shift+1" = "move container to workspace number ${ws1}";
+          "${modifier}+Shift+2" = "move container to workspace number ${ws2}";
+          "${modifier}+Shift+3" = "move container to workspace number ${ws3}";
+          "${modifier}+Shift+4" = "move container to workspace number ${ws4}";
+          "${modifier}+Shift+5" = "move container to workspace number ${ws5}";
+          "${modifier}+Shift+6" = "move container to workspace number ${ws6}";
+          "${modifier}+Shift+7" = "move container to workspace number ${ws7}";
+          "${modifier}+Shift+8" = "move container to workspace number ${ws8}";
+          "${modifier}+Shift+9" = "move container to workspace number ${ws9}";
+
+          "${modifier}+a+Shift+'" = "split h";
+          "${modifier}+a+Shift+5" = "split v";
+
           "${modifier}+f" = "fullscreen toggle";
-          "${modifier}+z" = "split h";
-          "${modifier}+x" = "split v";
           "${modifier}+r" = "mode resize";
+
+          "${modifier}+shift+q" = "kill";
+
+          ## i3 commands
+          "${modifier}+Shift+c" = "reload";
+          "${modifier}+Shift+r" = "restart";
+          "${modifier}+Shift+e" = "exit";
+
+          # Programs
+
+          ## Alacritty - terminal
+          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+
+          ## Rofi - application launcher
+          "${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
+
+          ## Flameshot - screenshot tool
+          "${modifier}+shift+s" = "exec ${pkgs.flameshot}/bin/flameshot gui -c";
+          "${modifier}+shift+a" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+
+          ## i3lock - lock screen
+          "${modifier}+shift+x" = "exec ${pkgs.i3lock}/bin/i3lock";
         };
 
-	# Assign specific windows to work spaces.
+        # Assign specific windows to work spaces. Might use this in the future.
         assigns = {
           # ${workspace.steam} = [{ class = "^Steam$"; }];
         };
@@ -144,7 +196,9 @@ in
           "j" = "resize shrink height 10 px or 10 ppt";
           "k" = "resize grow height 10 px or 10 ppt";
           "l" = "resize shrink width 10 px or 10 ppt";
-          "Escape" = "mode default";
+          "Escape" = "mode \"default\"";
+          "Enter" = "mode \"default\"";
+          "${modifier}+r" = "mode \"default\"";
         };
 
         startup = [
@@ -156,11 +210,6 @@ in
           {
             command = "systemctl --user restart polybar.service";
             always = true;
-            notification = false;
-          }
-          {
-            command = "${pkgs.alacritty}/bin/alacritty";
-            always = false;
             notification = false;
           }
         ];
