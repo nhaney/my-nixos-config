@@ -15,13 +15,10 @@ let
 in
 {
   home.packages = with pkgs; [
-    # Used for desktop background.
-    feh
-    # Used for cliboard.
+    # Used for clipboard.
     xclip
     # Used for lock screen
     i3lock
-
     # Used to generate base16 color schemes.
     flavours
   ];
@@ -30,7 +27,7 @@ in
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty";
-    theme = ./theme.rasi;
+    # theme = ./theme.rasi;
   };
 
   # Enable and run flameshot. Used for screenshotting.
@@ -50,7 +47,6 @@ in
     config = ./polybar_config.ini;
     package = pkgs.polybar.override {
       i3Support = true;
-      alsaSupport = true;
       pulseSupport = true;
     };
     script = "polybar &";
@@ -69,10 +65,10 @@ in
     opacityRules = map (window: "100:class_g *?= '${window}'") opaqueWindows;
 
     settings = {
-      corner-radius = 8;
-      rounded-corners-exclude = [
-        "class_i = 'polybar'"
-      ];
+      #corner-radius = 8;
+      #rounded-corners-exclude = [
+      #  "class_i = 'polybar'"
+      #];
       blur = {
         method = "dual_kawase";
 	strength = 3;
@@ -81,9 +77,6 @@ in
       };
     };
   };
-
-  # Put my desktop background in a common place.
-  home.file.".background.jpg".source = ./ultrawide_darksouls_wallpaper.jpg;
 
   xsession = {
     enable = true;
@@ -102,10 +95,11 @@ in
 
         bars = [ ];
 
-        #window = {
-        #  border = 0;
-        #  hideEdgeBorders = "both";
-        #};
+        window = {
+          border = 0;
+          hideEdgeBorders = "both";
+	  # titlebar = false;
+        };
 
         gaps = {
           inner = 10;
@@ -205,11 +199,6 @@ in
         };
 
         startup = [
-          {
-            command = "${pkgs.feh}/bin/feh --bg-fill ~/.background.jpg";
-            always = true;
-            notification = false;
-          }
           {
             command = "systemctl --user restart polybar.service";
             always = true;

@@ -165,7 +165,6 @@
       git
       curl
       home-manager
-      alacritty
   ];
 
   hardware.opengl = {

@@ -7,7 +7,6 @@
     # Only allow extensions to be modified by nix.
     mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
-      dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
       ionide.ionide-fsharp
@@ -16,7 +15,6 @@
     ];
     userSettings = {
       "vim.useSystemClipboard" = true;
-      "workbench.colorTheme" = "Dracula";
       "nix.editor.tabSize" = 2;
     };
   };

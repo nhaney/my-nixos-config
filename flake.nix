@@ -24,6 +24,12 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Stylix input, used for styling desktop.
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -32,13 +38,14 @@
     home-manager,
     firefox-addons,
     nixvim,
+    stylix,
   } @ inputs:
   let
     inherit (self) outputs;
 
     system = "x86_64-linux";
 
-    pkgs = import nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
+    pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
   in
   {
     # My NixOS configurations.
@@ -59,7 +66,7 @@
       "nigel@desktop" = home-manager.lib.homeManagerConfiguration {
         # Use the packages specified above for this home manager configuration.
         inherit pkgs;
-        extraSpecialArgs = { inherit firefox-addons; inherit nixvim; };
+        extraSpecialArgs = { inherit firefox-addons; inherit nixvim; inherit stylix; };
         
         # Home manager modules used.
         modules = [
