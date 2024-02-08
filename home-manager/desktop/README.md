@@ -7,8 +7,10 @@ This folder contains all of the configuration for desktop environments. This is 
 * [x] i3 workspaces
 * [x] picom transparant background blurring
 * [x] Generate base16 theme with flavours
-* [ ] Install flavours
-* [ ] i3 + polybar + rofi theming with stylix
+* [x] Install flavours
+* [x] i3 + polybar + rofi theming with stylix
+  * Make rofi theme better
 * [ ] polybar i3 configuration
 * [ ] polybar audio and volume control
+    * https://github.com/polybar/polybar-scripts/pull/320/files
 * [ ] polybar network control
