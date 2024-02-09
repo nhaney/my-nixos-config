@@ -9,9 +9,22 @@ This folder contains all of the configuration for desktop environments. This is 
 * [x] Generate base16 theme with flavours
 * [x] Install flavours
 * [x] i3 + polybar + rofi theming with stylix
-  * Make rofi theme better
 * [x] polybar i3 configuration
-* [ ] polybar audio and volume control
-    * https://github.com/polybar/polybar-scripts/pull/320/files
+* [x] polybar audio and volume control
 * [ ] polybar network control
+    * Wifi
+    * Ethernet
+    * Airplane mode
+* [ ] polybar bluetooth control
+* [ ] polybar disk space
 * [ ] Dunst notifications
+
+## Future things to work on
+
+* [ ] Wrap up https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md as a derivation + polybar module
+* [ ] Separate out theme of polybar modules from general positioning/functionality.
+* [ ] Auto launch i3 workspace (maybe a special labeled one?) with settings windows.
+    * Nvidia settings
+    * pavucontrol
+    * bluetooth
+    * etc.
