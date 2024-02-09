@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   ws1 = "1";
@@ -19,8 +19,10 @@ in
     xclip
     # Used for lock screen
     i3lock
-    # Used to generate base16 color schemes.
-    flavours
+    # Used for volume control
+    pavucontrol
+    pulseaudio
+    pamixer
   ];
 
   # Enable rofi. Used to run programs from i3.
@@ -50,6 +52,15 @@ in
     script = "polybar &";
     extraConfig = (builtins.readFile ./polybar_modules.ini);
   };
+
+  # look into: https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md
+  # Maybe create a derivation of that?
+  home.file."${config.xdg.configHome}/polybar/pipewire.sh" = {
+    source = "${(pkgs.callPackage ./polybar_pipewire_script.nix {})}/bin/polybar_pipewire_script";
+    executable = true;
+  };
+
+  # home.file."${config.xdg.configHome}/polybar/pipewire.sh" = import ./polybar_pipewire_script.nix { pkgs, lib };
 
   xsession = {
     enable = true;

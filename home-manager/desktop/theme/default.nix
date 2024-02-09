@@ -28,6 +28,9 @@
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/zenburn.yaml";
 
   stylix.polarity = "dark";
+
+  # For now disable on vim because it isn't applying correctly.
+  stylix.targets.nixvim.enable = false;
   
   stylix.fonts = {
     serif = {
