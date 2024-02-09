@@ -27,7 +27,6 @@ in
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty";
-    # theme = ./theme.rasi;
   };
 
   # Enable and run flameshot. Used for screenshotting.
@@ -35,7 +34,6 @@ in
     enable = true;
     settings = {
       General = {
-        uiColor = "#FFFFFF";
         showHelp = false;
       };
     };
@@ -53,59 +51,13 @@ in
     extraConfig = (builtins.readFile ./polybar_modules.ini);
   };
 
-  # Enable and run picom window compositor for things like transparant windows and border rounding.
-  services.picom = {
-    enable = true;
-
-    activeOpacity = 1.0;
-    inactiveOpacity = 0.95;
-    fade = true;
-    backend = "glx";
-
-    opacityRules = map (window: "100:class_g *?= '${window}'") opaqueWindows;
-
-    settings = {
-      #corner-radius = 8;
-      #rounded-corners-exclude = [
-      #  "class_i = 'polybar'"
-      #];
-      blur = {
-        method = "dual_kawase";
-	strength = 3;
-	background = true;
-	frame = true;
-      };
-    };
-  };
-
   xsession = {
     enable = true;
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3-gaps;
 
       config = rec {
         modifier = "Mod4";
-
-        fonts = {
-          names = [ "FiraCode" ];
-          style = "Bold";
-          size = 10.0;
-        };
-
-        bars = [ ];
-
-        window = {
-          border = 0;
-          hideEdgeBorders = "both";
-	  # titlebar = false;
-        };
-
-        gaps = {
-          inner = 10;
-          outer = 5;
-        };
-
 
         keybindings = {
           # General control

@@ -2,6 +2,11 @@
 {
   imports = [
     stylix.homeManagerModules.stylix
+    ./flameshot.nix
+    ./picom.nix
+    ./rofi.nix
+    ./i3.nix
+    ./polybar.nix
   ];
 
   home.packages = with pkgs; [
@@ -20,10 +25,7 @@
   #];
 
   stylix.image = ./ultrawide_black_knight.jpg;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
-
-  # Not sure why this one is not auto-enabled.
-  stylix.targets.alacritty.enable = true;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/zenburn.yaml";
 
   stylix.polarity = "dark";
   

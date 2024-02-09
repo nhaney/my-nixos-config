@@ -10,7 +10,8 @@ This folder contains all of the configuration for desktop environments. This is 
 * [x] Install flavours
 * [x] i3 + polybar + rofi theming with stylix
   * Make rofi theme better
-* [ ] polybar i3 configuration
+* [x] polybar i3 configuration
 * [ ] polybar audio and volume control
     * https://github.com/polybar/polybar-scripts/pull/320/files
 * [ ] polybar network control
+* [ ] Dunst notifications
