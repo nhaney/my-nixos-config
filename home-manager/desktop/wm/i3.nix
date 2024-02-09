@@ -53,8 +53,8 @@ in
     extraConfig = (builtins.readFile ./polybar_modules.ini);
   };
 
-  # look into: https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md
-  # Maybe create a derivation of that?
+  # look into this for a more advanced version: https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md
+  # Maybe try and create a derivation of that?
   home.file."${config.xdg.configHome}/polybar/pipewire.sh" = {
     source = "${(pkgs.callPackage ./polybar_pipewire_script.nix {})}/bin/polybar_pipewire_script";
     executable = true;

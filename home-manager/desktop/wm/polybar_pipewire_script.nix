@@ -1,8 +1,8 @@
-{ writeShellApplication, gnused, pipewire, pamixer }:
+{ writeShellApplication, pamixer, pavucontrol }:
 writeShellApplication {
   name = "polybar_pipewire_script";
 
-  runtimeInputs = [ gnused pipewire pamixer ];
+  runtimeInputs = [ pamixer pavucontrol ];
 
   text = builtins.readFile ./pipewire.sh;
 }

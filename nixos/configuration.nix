@@ -165,6 +165,7 @@
       git
       curl
       home-manager
+      pavucontrol
   ];
 
   hardware.opengl = {
