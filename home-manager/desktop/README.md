@@ -21,6 +21,7 @@ This folder contains all of the configuration for desktop environments. This is 
 
 ## Future things to work on
 
+* [ ] Polybar change to using nix based settings instead of file for separate theming.
 * [ ] Wrap up https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md as a derivation + polybar module
 * [ ] Separate out theme of polybar modules from general positioning/functionality.
 * [ ] Auto launch i3 workspace (maybe a special labeled one?) with settings windows.
