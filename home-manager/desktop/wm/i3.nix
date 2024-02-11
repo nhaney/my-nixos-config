@@ -25,6 +25,12 @@ in
     pamixer
   ];
 
+  # Network management applet that appears in status bar.
+  services.network-manager-applet.enable = true;
+
+  # Bluetooth applet that appears in status bar.
+  services.blueman-applet.enable = true;
+
   # Enable rofi. Used to run programs from i3.
   programs.rofi = {
     enable = true;
@@ -37,6 +43,7 @@ in
     settings = {
       General = {
         showHelp = false;
+	disabledTrayIcon = true;
       };
     };
   };
@@ -68,6 +75,8 @@ in
       enable = true;
 
       config = rec {
+        bars = [];
+
         modifier = "Mod4";
 
         keybindings = {

@@ -11,11 +11,11 @@ This folder contains all of the configuration for desktop environments. This is 
 * [x] i3 + polybar + rofi theming with stylix
 * [x] polybar i3 configuration
 * [x] polybar audio and volume control
-* [ ] polybar network control
+* [x] polybar network control
     * Wifi
     * Ethernet
     * Airplane mode
-* [ ] polybar bluetooth control
+* [x] polybar bluetooth control
 * [ ] polybar disk space
 * [ ] Dunst notifications
 
