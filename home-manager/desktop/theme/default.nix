@@ -24,7 +24,7 @@
   #  }
   #];
 
-  stylix.image = ./ultrawide_black_knight.jpg;
+  stylix.image = ./anor_londo_day.jpg;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/zenburn.yaml";
 
   stylix.polarity = "dark";
