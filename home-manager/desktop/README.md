@@ -16,16 +16,20 @@ This folder contains all of the configuration for desktop environments. This is 
     * Ethernet
     * Airplane mode
 * [x] polybar bluetooth control
-* [ ] polybar disk space
-* [ ] Dunst notifications
-
-## Future things to work on
-
-* [ ] Polybar change to using nix based settings instead of file for separate theming.
-* [ ] Wrap up https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md as a derivation + polybar module
-* [ ] Separate out theme of polybar modules from general positioning/functionality.
+* [x] polybar disk space
+* [x] Emoji selector
+* [ ] Better networking applet.
+    * [ ] Better on/off switch of network.
+* [ ] Polybar put config in nix instead of separate file
+* [ ] Polybar disk space enhancement (open gui?)
+* [ ] Polybar performance metrics (cpu, memory, gpu?)
 * [ ] Auto launch i3 workspace (maybe a special labeled one?) with settings windows.
+    * Launch workspace with specific keys.
+    * Close workspace with specific keys.
     * Nvidia settings
-    * pavucontrol
-    * bluetooth
+    * pavucontrol.
+    * bluetooth.
+    * Network settings.
     * etc.
+* [ ] Auto launch i3 workspace for development with a terminal that starts in project directory and a browser with firefox
+

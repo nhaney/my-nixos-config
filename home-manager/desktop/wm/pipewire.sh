@@ -18,8 +18,27 @@ function main() {
                 ;;
         esac
     else
-        VOLUME=$(pamixer --get-volume-human)
-        echo "${VOLUME}"
+	volume=$(pamixer --get-volume-human)
+
+	# Check if the volume is muted
+	if [[ $volume == "muted" ]]; then
+	    emoji="🔇"  # Muted
+	else
+	    # Extract the numeric volume value from the output
+	    volume_number=$(echo "$volume" | grep -oE '[0-9]+')
+
+	    # Define the emoji based on volume level
+	    if [ "$volume_number" -eq 0 ]; then
+		emoji="🔈"  # Muted
+	    elif [ "$volume_number" -lt 30 ]; then
+		emoji="🔈"  # Low volume
+	    elif [ "$volume_number" -lt 70 ]; then
+		emoji="🔉"  # Medium volume
+	    else
+		emoji="🔊"  # High volume
+	    fi
+	fi
+	echo "$emoji"
     fi
 }
 

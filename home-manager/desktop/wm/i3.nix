@@ -23,6 +23,8 @@ in
     pavucontrol
     pulseaudio
     pamixer
+    # Used for inserting text in windows
+    xdotool
   ];
 
   # Network management applet that appears in status bar.
@@ -35,6 +37,7 @@ in
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty";
+    plugins = [pkgs.rofi-emoji];
   };
 
   # Enable and run flameshot. Used for screenshotting.
@@ -144,8 +147,11 @@ in
           ## Alacritty - terminal
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
 
-          ## Rofi - application launcher
-          "${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
+          ## Rofi
+	  ### Application launcher
+          "${modifier}+d" = "exec --no-startup-id \"rofi -show drun\"";
+	  ### Emoji selector
+          "${modifier}+period" = "exec --no-startup-id \"rofi -modi emoji -show emoji\"";
 
           ## Flameshot - screenshot tool
           "${modifier}+shift+s" = "exec ${pkgs.flameshot}/bin/flameshot gui -c";
