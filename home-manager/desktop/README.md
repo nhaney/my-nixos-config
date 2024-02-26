@@ -32,4 +32,3 @@ This folder contains all of the configuration for desktop environments. This is 
     * Network settings.
     * etc.
 * [ ] Auto launch i3 workspace for development with a terminal that starts in project directory and a browser with firefox
-

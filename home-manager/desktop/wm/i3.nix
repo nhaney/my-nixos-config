@@ -54,7 +54,6 @@ in
   # Enable and run polybar. This is the status bar in the xsession.
   services.polybar = {
     enable = true;
-    config = ./polybar_config.ini;
     package = pkgs.polybar.override {
       i3Support = true;
       pulseSupport = true;
