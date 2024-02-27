@@ -22,20 +22,20 @@ function main() {
 
 	# Check if the volume is muted
 	if [[ $volume == "muted" ]]; then
-	    emoji="🔇"  # Muted
+	    emoji="󰝟"  # Muted
 	else
 	    # Extract the numeric volume value from the output
 	    volume_number=$(echo "$volume" | grep -oE '[0-9]+')
 
 	    # Define the emoji based on volume level
 	    if [ "$volume_number" -eq 0 ]; then
-		emoji="🔈"  # Muted
+		emoji="󰖁"
 	    elif [ "$volume_number" -lt 30 ]; then
-		emoji="🔈"  # Low volume
+		emoji=""  # Low volume
 	    elif [ "$volume_number" -lt 70 ]; then
-		emoji="🔉"  # Medium volume
+		emoji="󰖀"  # Medium volume
 	    else
-		emoji="🔊"  # High volume
+		emoji="󰕾"  # High volume
 	    fi
 	fi
 	echo "$emoji"

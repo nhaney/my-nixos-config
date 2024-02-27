@@ -8,7 +8,7 @@ in
     package = pkgs.i3-gaps;
     config = {
       fonts = {
-        names = [ myconfig.stylix.fonts.monospace.name ];
+        names = [ config.stylix.fonts.monospace.name ];
         # Need to do this to convert to float?
         size = myconfig.stylix.fonts.sizes.desktop + 0.0;
       };
