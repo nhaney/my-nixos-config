@@ -4,14 +4,14 @@
         settings = {
             "bar/i3-bar" = {
                 font = [
-                    "${config.stylix.fonts.monospace.name};size=${builtins.toString config.stylix.fonts.sizes.desktop};antialias=true;2"
-                    "${config.stylix.fonts.emoji.name};size=${builtins.toString config.stylix.fonts.sizes.desktop};antialias=true;2"
+                    "${config.stylix.fonts.monospace.name}:style=Regular;size=${builtins.toString config.stylix.fonts.sizes.desktop};antialias=true;2"
+                    "${config.stylix.fonts.emoji.name}:style=Regular:scale=10;size=${builtins.toString config.stylix.fonts.sizes.desktop};antialias=true;2"
                 ];
                 background = "#00000000";
                 height = "3.5%";
                 modules-left = "i3";
                 modules-center = "date time";
-                modules-right = "filesystem pipewire";
+                modules-right = "pipewire filesystem";
                 tray-position = "right";
                 module-margin = 2;
                 border-top-size = 12;
