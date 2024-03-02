@@ -5,9 +5,12 @@
         nixvim.homeManagerModules.nixvim
         ./theme.nix
         ./lualine.nix
+        ./keymap.nix
         ./options.nix
         ./lsp.nix
         ./languages
+        ./cmp.nix
+        ./telescope.nix
     ];
 
     programs.nixvim = {

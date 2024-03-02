@@ -15,7 +15,7 @@
                     lspBuf = {
                         gd = "definition";
                         gD = "references";
-                        gt = "type_definition";
+                        gQ = "type_definition";
                         gi = "implementation";
                         K = "hover";
                         "<F2>" = "rename";

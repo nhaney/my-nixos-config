@@ -1,4 +1,3 @@
-{ pkgs, nixvim, ... }:
 {
     programs.nixvim = {
         plugins.lualine = {
