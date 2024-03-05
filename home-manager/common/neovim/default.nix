@@ -11,6 +11,8 @@
         ./languages
         ./cmp.nix
         ./telescope.nix
+        ./formatting.nix
+        ./syntax.nix
     ];
 
     programs.nixvim = {

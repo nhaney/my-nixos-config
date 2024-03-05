@@ -4,8 +4,10 @@
 
 * [ ] Persistence plugin
 * [ ] Treesitter plugin
-* [ ] LSP + editor support for other languages:
+* [ ] Editor support for other languages:
     * [ ] python
+        * [x] pyright LSP 
+        * [ ] 
     * [ ] c#
     * [ ] f#
     * [ ] rust
@@ -17,9 +19,12 @@
     * [ ] lua
     * [ ] binary?
     * [ ] other common?
+* [ ] other cmp sources
 * [ ] DAP?
 * [ ] Commenting plugin
 * [ ] Paren+more pairing plugins
     * [ ] Autopairs
     * [ ] Rainbow pairs
+    * [ ] mini?
 * [ ] Theming with stylix
+
