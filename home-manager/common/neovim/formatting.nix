@@ -11,7 +11,7 @@
 
         autoCmd = [
             {
-                event = ["WriteBufPre"];
+                event = ["BufWritePre"];
                 pattern = ["*"];
                 callback = {
                     __raw = "function(args) require(\"conform\").format({bufnr = args.buf}) end";

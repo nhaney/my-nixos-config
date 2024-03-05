@@ -5,8 +5,8 @@
 
             nixvimInjections = true;
 
-            folding = true;
-            indent = true;
+            # folding = true;
+            # indent = true;
         };
     };
 }
