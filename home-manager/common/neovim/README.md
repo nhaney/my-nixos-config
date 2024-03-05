@@ -3,11 +3,15 @@
 ## Goals
 
 * [ ] Persistence plugin
-* [ ] Treesitter plugin
 * [ ] Editor support for other languages:
     * [ ] python
-        * [x] pyright LSP 
-        * [ ] 
+        * [x] pyright LSP
+        * [x] Black/isort formatting
+        * [ ] Test runner?
+        * [ ] DAP debugging?
+    * [ ] nix
+        * [x] `nil_ls` LSP
+        * [ ] formatting
     * [ ] c#
     * [ ] f#
     * [ ] rust
@@ -20,11 +24,12 @@
     * [ ] binary?
     * [ ] other common?
 * [ ] other cmp sources
+    * [ ] File path
 * [ ] DAP?
 * [ ] Commenting plugin
 * [ ] Paren+more pairing plugins
     * [ ] Autopairs
     * [ ] Rainbow pairs
-    * [ ] mini?
+    * [ ] mini nvim has these?
 * [ ] Theming with stylix
 

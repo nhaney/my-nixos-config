@@ -5,6 +5,7 @@
 
             nixvimInjections = true;
 
+            # TODO: Figure out how to use these properly.
             # folding = true;
             # indent = true;
         };
