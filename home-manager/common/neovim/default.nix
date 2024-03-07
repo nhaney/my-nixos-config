@@ -13,6 +13,7 @@
         ./telescope.nix
         ./formatting.nix
         ./syntax.nix
+        ./debug.nix
     ];
 
     programs.nixvim = {
