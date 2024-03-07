@@ -7,8 +7,8 @@
     * [ ] python
         * [x] pyright LSP
         * [x] Black/isort formatting
-        * [ ] Test runner?
-        * [ ] DAP debugging?
+        * [ ] Ruff to replace black/isort
+        * [ ] Test runner/DAP
     * [ ] nix
         * [x] `nil_ls` LSP
         * [ ] formatting
@@ -25,7 +25,6 @@
     * [ ] other common?
 * [ ] other cmp sources
     * [ ] File path
-* [ ] DAP?
 * [ ] Commenting plugin
 * [ ] Paren+more pairing plugins
     * [ ] Autopairs
