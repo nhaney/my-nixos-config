@@ -29,6 +29,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Tailscale networking
+  services.tailscale.enable = true;
+  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -166,6 +170,7 @@
       curl
       home-manager
       pavucontrol
+      tailscale
   ];
 
   hardware.opengl = {

@@ -4,7 +4,6 @@
         extensions.dap-ui.enable = true;
     };
 
-
     programs.nixvim.keymaps = [
         {
             mode = "n";
