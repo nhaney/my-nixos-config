@@ -3,11 +3,26 @@
     programs.tmux = {
         enable = true;
         shortcut = "a";
+
+        plugins = with pkgs; [
+          tmuxPlugins.cpu
+          # See: https://github.com/tmux-plugins/tmux-resurrect/tree/master
+          {
+            plugin = tmuxPlugins.resurrect;
+            # TODO: Set this up in neovim config if I want it.
+            # extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+          }
+          # See: https://github.com/tmux-plugins/tmux-continuum
+          {
+            plugin = tmuxPlugins.continuum;
+            extraConfig = ''
+              set -g @continuum-restore 'on'
+              set -g @continuum-save-interval '15'
+            '';
+          }
+        ];
+
         extraConfig = ''
-set -g default-terminal "screen-256color"
-
-set-option -sa terminal-overrides ',xterm-256color:RGB'
-
 # change prefix to C-a
 set-option -g prefix C-a
 unbind-key C-b
@@ -22,12 +37,6 @@ bind l select-pane -R
 # start window index at 1
 set -g base-index 1
 
-# allows for faster repitition
-set -s escape-time 0
-
-# reload config with r
-bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
-
 # reorder windows with y
 bind y movew -r \; display-message "Windows reordered..."
 
@@ -41,7 +50,7 @@ set -g mode-keys vi
 bind-key -T copy-mode-vi 'v' send -X begin-selection
 bind-key -T copy-mode-vi 'V' send -X select-line
 bind-key -T copy-mode-vi 'r' send -X rectangle-toggle
-bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "xclip -in -selection clipboard"
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "${pkgs.xclip}/bin/xclip -in -selection clipboard"
 
 # split pane in same dir
 bind c new-window -c "#{pane_current_path}"
