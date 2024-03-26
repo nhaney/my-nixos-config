@@ -19,6 +19,7 @@
                         gi = "implementation";
                         K = "hover";
                         "<F2>" = "rename";
+                        "<leader>ca" = "code_action";
                     };
                 };
             };
