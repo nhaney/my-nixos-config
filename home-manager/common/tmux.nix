@@ -3,6 +3,8 @@
     programs.tmux = {
         enable = true;
         shortcut = "a";
+        escapeTime = 0;
+        mouse = true;
 
         plugins = with pkgs; [
           tmuxPlugins.cpu
