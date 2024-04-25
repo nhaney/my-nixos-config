@@ -23,6 +23,8 @@
                     };
                 };
             };
+
+            trouble.enable = true;
         };
     };
 }

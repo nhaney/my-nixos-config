@@ -67,7 +67,7 @@
       autoLogin.user = "nigel";
       # Set up primary ultrawide monitor with correct resolution and position.
       setupCommands = ''
-      ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
+          ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
       '';
     };
 
