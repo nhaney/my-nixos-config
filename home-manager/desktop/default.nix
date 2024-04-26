@@ -6,6 +6,7 @@
     ./vscode.nix
     ./wm
     ./theme
+    ./gaming
   ];
 
 }
