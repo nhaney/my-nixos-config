@@ -26,6 +26,7 @@ in
         background = true;
         frame = true;
       };
+      unredir-if-possible = true;
     };
   };
 }

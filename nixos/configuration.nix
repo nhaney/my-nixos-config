@@ -183,9 +183,9 @@
       modesetting.enable = true;
       powerManagement.enable = false;
       powerManagement.finegrained = false;
-      open = true;
+      open = false;
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.bluetooth.enable = true;
@@ -224,4 +224,6 @@
   virtualisation.docker.enable = true;
 
   programs.steam.enable = true;
+
+  programs.gamemode.enable = true;
 }

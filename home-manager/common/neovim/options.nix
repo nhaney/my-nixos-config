@@ -1,6 +1,6 @@
 {
     programs.nixvim = {
-        options = {
+        opts = {
             number = true;
             relativenumber = true;
 
