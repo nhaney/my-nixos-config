@@ -36,7 +36,7 @@ in
   # Enable rofi. Used to run programs from i3.
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${pkgs.alacritty}/bin/alacritty --command tmux";
     plugins = [pkgs.rofi-emoji];
   };
 
@@ -144,7 +144,7 @@ in
           # Programs
 
           ## Alacritty - terminal
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+          "${modifier}+Return" = "exec \"${pkgs.alacritty}/bin/alacritty --command tmux\"";
 
           ## Rofi
 	  ### Application launcher

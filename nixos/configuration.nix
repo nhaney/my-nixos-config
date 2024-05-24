@@ -226,4 +226,9 @@
   programs.steam.enable = true;
 
   programs.gamemode.enable = true;
+
+  security.pam.loginLimits = [
+    # Possibly needed for RPCS3
+    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
+  ];
 }
