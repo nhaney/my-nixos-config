@@ -16,9 +16,8 @@ I want to be able to specify the following flavors of neovim:
         * debugging
         * etc.
 
-These "flavors" should be made available as a separate nix functions that can apply to a base derivation:
+These "flavors" should be made able to be configured separately and applied using
+nix config. At the end, there should be a single derivation that contains the custom
+neovim config required for a project.
 
-Example:
-```
-
-```
+Checkout this config for inspiration: https://github.com/ALT-F4-LLC/thealtf4stream.nvim
