@@ -1,5 +1,5 @@
-local function init()
-    vim.print("hello there from custom plugin.")
+local function init(greeting)
+    vim.print("'".. greeting .. "' from custom plugin.")
 end
 
 vim.print("hello there from custom plugin.")

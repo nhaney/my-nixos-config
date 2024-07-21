@@ -1,3 +1,3 @@
 lua << EOF
-require 'my-nvim-config'.init()
+    require 'my-nvim-config'.init()
 EOF
