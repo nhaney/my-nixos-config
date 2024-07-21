@@ -6,5 +6,6 @@
     ./fzf.nix
     ./tmux.nix
     ./neovim
+    ./custom.nix
   ];
 }
