@@ -8,6 +8,7 @@ let
 in
 neovim.override {
     configure = {
+        customRC = builtins.readFile ./init.vim;
         packages.myPlugins = {
             start = [ my-nvim-config ];
         };
