@@ -147,9 +147,9 @@ in
           "${modifier}+Return" = "exec \"${pkgs.alacritty}/bin/alacritty --command tmux\"";
 
           ## Rofi
-	  ### Application launcher
+          ### Application launcher
           "${modifier}+d" = "exec --no-startup-id \"rofi -show drun\"";
-	  ### Emoji selector
+          ### Emoji selector
           "${modifier}+period" = "exec --no-startup-id \"rofi -modi emoji -show emoji\"";
 
           ## Flameshot - screenshot tool

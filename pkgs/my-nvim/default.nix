@@ -1,4 +1,4 @@
-{ neovim, vimUtils, ...}:
+{ neovim, neovim-unwrapped, makeNeovimConfig, wrapNeovimUnstable, vimUtils, lib, ...}:
 let 
     # Neovim plugin.
     my-nvim-config = vimUtils.buildVimPlugin {
@@ -12,12 +12,12 @@ let
     # has been processed by the various nix functions needed
     # to successfully create the neovim derivation.
     # Lua table can be made from nix attrset like this: https://github.com/NixOS/nixpkgs/blob/master/lib/generators.nix
-    mkMyNeovim = { greeting }:
+    mkMyNeovim = config:
         neovim.override {
             configure = {
                 customRC = ''
                 lua << EOF
-                    require 'my-nvim-config'.init("${greeting}")
+                    require 'my-nvim-config'.init(${lib.generators.toLua { multiline = false; } config})
                 EOF
                 '';
                 packages.myPlugins = {

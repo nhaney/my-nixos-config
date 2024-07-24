@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
-    my-nvim = pkgs.callPackage ../../pkgs/my-nvim { };
+    pathToMyNvim = "${config.home.homeDirectory}/my-nixos-config/pkgs/my-nvim";
     my-nvim-wrapper = pkgs.writeShellScriptBin "my-nvim" ''
-        ${my-nvim}/bin/nvim
+        NVIM_APPNAME=my-nvim ${pkgs.neovim}/bin/nvim
     '';
 in
 {
@@ -10,4 +10,6 @@ in
   home.packages = [
     my-nvim-wrapper
   ];
+
+  home.file."${config.xdg.configHome}/my-nvim".source = config.lib.file.mkOutOfStoreSymlink pathToMyNvim;
 }
