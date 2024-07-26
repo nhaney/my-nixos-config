@@ -3,13 +3,13 @@ let
     # My actual neovim package.
     myNvim = pkgs.callPackage ../../pkgs/my-nvim {};
     my-nvim-wrapper = pkgs.writeShellScriptBin "my-nvim" ''
-        ${myNvim}/bin/nvim
+        ${myNvim}/bin/nvim "$@"
     '';
 
     # My dev neovim package with hot reloading.
     pathToMyNvimSource = "${config.home.homeDirectory}/my-nixos-config/pkgs/my-nvim";
     my-nvim-dev-wrapper = pkgs.writeShellScriptBin "my-nvim-dev" ''
-        NVIM_APPNAME=my-nvim ${pkgs.neovim}/bin/nvim
+        NVIM_APPNAME=my-nvim ${pkgs.neovim}/bin/nvim "$@"
     '';
 
 in
