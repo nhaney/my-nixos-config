@@ -24,6 +24,8 @@
   #  }
   #];
 
+  stylix.enable = true;
+
   stylix.image = ./anor_londo_day.jpg;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/zenburn.yaml";
 

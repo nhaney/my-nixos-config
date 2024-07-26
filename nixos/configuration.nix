@@ -28,6 +28,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # Tailscale networking
   services.tailscale.enable = true;
@@ -124,7 +125,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -175,7 +175,6 @@
 
   hardware.opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
   };
   
