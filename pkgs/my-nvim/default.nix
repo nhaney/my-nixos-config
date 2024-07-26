@@ -1,4 +1,4 @@
-{ neovim, neovim-unwrapped, makeNeovimConfig, wrapNeovimUnstable, vimUtils, lib, ...}:
+{ neovim, vimUtils, lib, myNeovimConfig ? null, ...}:
 let 
     # Neovim plugin.
     my-nvim-config = vimUtils.buildVimPlugin {
@@ -11,7 +11,13 @@ let
     # will be passed to the lua code as a table after it
     # has been processed by the various nix functions needed
     # to successfully create the neovim derivation.
-    # Lua table can be made from nix attrset like this: https://github.com/NixOS/nixpkgs/blob/master/lib/generators.nix
+    # Lua table can be made from nix attrset like this: https://github.com/NixOS/nixpkgs/blob/master/lib/generators.nix.
+    # baseConfig is an example of the config that can be passed in.
+    baseConfig = {
+        greeting = "base greeting from package.";
+        languageSupport = {};
+    };
+
     mkMyNeovim = config:
         neovim.override {
             configure = {
@@ -26,4 +32,4 @@ let
             };
         };
 in
-mkMyNeovim { greeting = "greetings from nix"; }
+mkMyNeovim (if myNeovimConfig == null then baseConfig else myNeovimConfig)
