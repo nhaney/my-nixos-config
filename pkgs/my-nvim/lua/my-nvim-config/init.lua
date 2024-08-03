@@ -3,7 +3,10 @@ local function init(config)
 
     require 'my-nvim-config.keymaps'
     require 'my-nvim-config.options'
-    require 'my-nvim-config.lua'
+
+    if config.neovimDevSupport then
+        require 'my-nvim-config.nvimdev'
+    end
 end
 
 vim.print("hello there from custom plugin edited.")

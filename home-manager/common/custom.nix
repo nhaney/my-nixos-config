@@ -9,7 +9,7 @@ let
     # My dev neovim package with hot reloading.
     pathToMyNvimSource = "${config.home.homeDirectory}/my-nixos-config/pkgs/my-nvim";
     my-nvim-dev-wrapper = pkgs.writeShellScriptBin "my-nvim-dev" ''
-        NVIM_APPNAME=my-nvim ${pkgs.neovim}/bin/nvim "$@"
+        NVIM_APPNAME=my-nvim ${myNvim}/bin/nvim "$@"
     '';
 
 in

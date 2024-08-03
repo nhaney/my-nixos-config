@@ -1,4 +1,4 @@
-{ neovim, vimUtils, lib, myNeovimConfig ? null, ...}:
+{ neovim, vimPlugins, vimUtils, lib, lua-language-server, myNeovimConfig ? null, ...}:
 let 
     # Neovim plugin.
     my-nvim-config = vimUtils.buildVimPlugin {
@@ -16,20 +16,47 @@ let
     baseConfig = {
         greeting = "base greeting from package.";
         languageSupport = {};
+        neovimDevSupport = true;
     };
+
+    extraPackagesForConfig = config:
+        let
+            basePackages = [];
+            neovimDevPackages = [
+                lua-language-server
+            ];
+        in
+            basePackages ++ lib.optionals config.neovimDevSupport neovimDevPackages;
+    pluginsForConfig = config:
+        let
+            basePlugins = with vimPlugins; [
+                # TODO: Not sure I need all of this?
+                nvim-treesitter.withAllGrammars
+                nvim-lspconfig
+
+                # The custom package.
+                my-nvim-config
+            ];
+
+            neovimDevPlugins = with vimPlugins; [
+                lazydev-nvim
+            ];
+        in
+            basePlugins ++
+                lib.optionals config.neovimDevSupport neovimDevPlugins;
+
 
     mkMyNeovim = config:
         neovim.override {
             configure = {
                 customRC = ''
                 lua << EOF
-                    require 'my-nvim-config'.init(${lib.generators.toLua { multiline = false; } config})
+                    require 'my-nvim-config'.init ${lib.generators.toLua { multiline = false; } config}
                 EOF
                 '';
-                packages.myPlugins = {
-                    start = [ my-nvim-config ];
-                };
+                packages.myPlugins.start = pluginsForConfig config;
             };
+            extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath (extraPackagesForConfig config)}"'';
         };
 in
 mkMyNeovim (if myNeovimConfig == null then baseConfig else myNeovimConfig)
