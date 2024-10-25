@@ -9,7 +9,7 @@ local function init(config)
     end
 end
 
-vim.print("hello there from custom plugin edited.")
+vim.print("hello there from custom plugin edited again.")
 
 return {
     init = init,

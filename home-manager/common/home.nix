@@ -77,4 +77,6 @@
     nix-direnv.enable = true;
   };
   programs.bash.enable = true;
+
+  programs.nix-index.enable = true;
 }

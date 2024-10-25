@@ -30,6 +30,12 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # SSBM support.
+    slippi = {
+        url = "github:lytedev/slippi-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -39,6 +45,7 @@
     firefox-addons,
     nixvim,
     stylix,
+    slippi
   } @ inputs:
   let
     inherit (self) outputs;
@@ -54,6 +61,7 @@
       desktop = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
+          slippi.nixosModules.default
           ./nixos/configuration.nix
         ];
       };
@@ -72,6 +80,7 @@
         modules = [
           ./home-manager/common
           ./home-manager/desktop
+          slippi.homeManagerModules.default
         ];
       };
     };

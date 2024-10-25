@@ -43,12 +43,14 @@ things like the plugins, etc.
 
 https://github.com/viperML/dotfiles/blob/098fb8c32498cedb30be69562ec99137eb32d5d3/packages/neovim/default.nix
 
+Also look at what home manager does: https://github.com/nix-community/home-manager/blob/5ec753a1fc4454df9285d8b3ec0809234defb975/modules/programs/neovim.nix
+
 #### Ideas after research
 
 * Create a wrapper function over wrapNeovimUnstable and makeNeovimConfig that takes a simple attrset that is the main configuration entrypoint.
     * The configuration should be able to be easily expanded in the future.
-    * The proper packages are installed based on the configuration (e.g. LSPs)
+    * The proper nix packages are installed based on the configuration for external dev tools (e.g. LSPs, debug servers, etc.)
     * The proper vim plugins are installed.
     * A home manager module is exposed which allows for the dev version of the neovim config to be defined that can be hot-reloaded with the out of store symlink functionality.
-    * The wrapper can be used to install a neovim derivation specific to any project with only the required dependencies.
+    * The wrapper can be used to install a neovim derivation specific to any project with only the required dependencies. This will be referenced from my
 
