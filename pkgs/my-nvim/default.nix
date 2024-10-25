@@ -7,11 +7,12 @@
 let 
 
     # The base configuration of the package overridden by the config passed in.
+    # TODO: Figure out how to override this properly.
     finalConfig = {
         greeting = "base greeting from package.";
         languageSupport = {};
         neovimDevSupport = false;
-    } // myNeovimConfig;
+    }; #// myNeovimConfig;
 
     # Given a configuration, return the required external nix packages (LSP, utilities, debug servers, etc.)
     pkgsForConfig = config:
@@ -63,7 +64,7 @@ let
                 EOF
             '';
 
-            plugins = pluginsForConfig myNeovimConfig;
+            plugins = pluginsForConfig finalConfig;
         };
 in rec
 {
@@ -74,7 +75,7 @@ in rec
     extraPackages = pkgsForConfig finalConfig;
 
     # The final wrapped neovim package containing everything needed for the passed in configuration.
-    package = wrapNeovimUnstable neovim-unwrapped (finalConfig // {
+    package = wrapNeovimUnstable neovim-unwrapped (neovimConfig // {
         wrapperArgs = neovimConfig.wrapperArgs ++ [
           # extra runtime deps
           "--prefix"
