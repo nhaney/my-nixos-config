@@ -75,9 +75,6 @@ in rec
 
     # The final wrapped neovim package containing everything needed for the passed in configuration.
     package = wrapNeovimUnstable neovim-unwrapped (finalConfig // {
-        packpathDirs.myNeovimPackages.start = [];
-        packpathDirs.myNeovimPackages.opt = [];
-
         wrapperArgs = neovimConfig.wrapperArgs ++ [
           # extra runtime deps
           "--prefix"
