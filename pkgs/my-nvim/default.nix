@@ -14,7 +14,7 @@ let
     # The base config with no optional features added.
     baseConfig = {
         greeting = "base greeting from package.";
-        features = {};
+        features = { neovimDev.enable = false; };
     };
 
 
@@ -81,7 +81,7 @@ let
 in
 {
     # The package for my custom neovim distribution.
-    package = wrapNeovimUnstable neovim-unwrapped neovimConfig // { plugins = neovimConfig.plugins ++ [myNvimVimPlugin ] ;};
+    package = wrapNeovimUnstable neovim-unwrapped (neovimConfig // { plugins = neovimConfig.plugins ++ [ myNvimVimPlugin ] ;});
 
     # Home manager module that installs neovim in "dev mode" where lua files can be edited without rebuilding the neovim package, but plugins
     # and extra packages are still managed by nix and will 
