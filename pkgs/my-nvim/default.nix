@@ -3,33 +3,41 @@
 # will be passed to the lua code as a table after it
 # has been processed by the various nix functions needed
 # to successfully create the neovim derivation/package.
-{ neovim-unwrapped, wrapNeovimUnstable, neovimUtils, vimPlugins, vimUtils, lib, lua-language-server, myNeovimConfig ? {}, ...}:
+{ callPackage, neovim-unwrapped, wrapNeovimUnstable, neovimUtils, vimPlugins, vimUtils, lib,
+    # myNvimConfig, used in both lua for configuration and in nix for what to install.
+    myNvimConfig ? {},
+    # overrides for `makeNeovimConfig` to do things like unset vi alias, etc.
+    makeNeovimConfigOverrides ? {},
+...}:
 let 
 
-    # The base configuration of the package overridden by the config passed in.
-    # TODO: Figure out how to override this properly.
+    # The base config with no optional features added.
     baseConfig = {
         greeting = "base greeting from package.";
         features = {};
-        tools = {};
-        neovimDevSupport = false;
-    }; #// myNeovimConfig;
+    };
+
+
+    # The full config with all optional features added.
+    # TODO: Maybe just have this be a comment as an example?
+    fullConfig = {};
+
+    # The config to be used by the rest of this derivation.
+    finalMyNvimConfig = baseConfig // myNvimConfig;
+
+    # Neovim plugin that is built from the lua files in this directory.
+    myNvimVimPlugin = vimUtils.buildVimPlugin {
+        name = "my-nvim-config";
+        src = ./.;
+    };
 
     # Given a configuration, return the required external nix packages (LSP, utilities, debug servers, etc.)
     pkgsForConfig = config:
         let
             basePackages = [];
-            neovimDevPackages = [
-                lua-language-server
-            ];
         in
-            basePackages ++ lib.optionals config.neovimDevSupport neovimDevPackages;
-
-    # Neovim plugin that is built from the lua files in this directory.
-    my-nvim-config = vimUtils.buildVimPlugin {
-        name = "my-nvim-config";
-        src = ./.;
-    };
+            basePackages 
+                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages;
 
     # Given a configuration, return the nix packages neovim plugins that are required.
     pluginsForConfig = config:
@@ -38,41 +46,29 @@ let
                 # TODO: Not sure I need all of this?
                 nvim-treesitter.withAllGrammars
                 nvim-lspconfig
-
-                # The custom package.
-                my-nvim-config
-            ];
-
-            neovimDevPlugins = with vimPlugins; [
-                lazydev-nvim
             ];
         in
-            basePlugins ++
-                lib.optionals config.neovimDevSupport neovimDevPlugins;
+            basePlugins
+                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins;
 
+    extraPackages = pkgsForConfig finalMyNvimConfig;
 
-    mkMyNeovimConfig = config:
-        neovimUtils.makeNeovimConfig {
+    neovimConfig = let 
+        configWithoutExtraPackages = neovimUtils.makeNeovimConfig {
             withPython3 = false;
-            withRuby = false;
-            withNodeJs = false;
 
-            extraLuaPackages = (lp: []);
+            vimAlias = true;
+            viAlias = true;
 
             customRC = ''
                 lua << EOF
-                    require 'my-nvim-config'.init ${lib.generators.toLua { multiline = false; } config}
+                    require 'my-nvim-config'.init ${lib.generators.toLua { multiline = false; } finalMyNvimConfig}
                 EOF
             '';
 
-            plugins = pluginsForConfig finalConfig;
-        } // config.extraMakeConfigArgs;
-in rec
-{
-    # The configuration generated based on the passed in config.
-    neovimConfig = let 
-        configWithoutExtraPackages = mkMyNeovimConfig finalConfig;
-    in
+            plugins = pluginsForConfig finalMyNvimConfig;
+        } // makeNeovimConfigOverrides;
+    in 
         configWithoutExtraPackages // {
             wrapperArgs = configWithoutExtraPackages.wrapperArgs ++ [
               # Extra runtime deps are passed in as wrapperArgs so they are available from inside neovim.
@@ -82,14 +78,12 @@ in rec
               (lib.makeBinPath extraPackages)
             ];
         };
+in
+{
+    # The package for my custom neovim distribution.
+    package = wrapNeovimUnstable neovim-unwrapped neovimConfig // { plugins = neovimConfig.plugins ++ [myNvimVimPlugin ] ;};
 
-    # The extra nix packages required for the config.
-    extraPackages = pkgsForConfig finalConfig;
-
-    # The final wrapped neovim package containing everything needed for the passed in configuration.
-    package = wrapNeovimUnstable neovim-unwrapped neovimConfig;
-
-    # Installs neovim in "dev mode" where lua files can be edited without rebuilding the neovim package, but plugins
+    # Home manager module that installs neovim in "dev mode" where lua files can be edited without rebuilding the neovim package, but plugins
     # and extra packages are still managed by nix and will 
     # TODO: Make this also be compatible without the "dev mode" and just install the package normally.
     # For now this isn't needed as I want to always be able to hot-reload my config on the host side.
@@ -131,56 +125,36 @@ in rec
                         which is where neovim looks for app specific config to wherever was specified in the `pathToMyNvimSource`
                         option.
                     '';
-                }
-
-                extraMakeConfigArgs = lib.mkOption {
-                    type = lib.types.attrs;
-                    description = ''
-                        Extra attributes to pass to the 'vimUtils.makeNeovimConfig' function.
-                        For example, you can use things like `viAlias`, `vimAlias`, etc.
-                    '';
-                    default = {};
                 };
             };
         };
         config = let 
             # We want to make sure that the neovim is wrapped with NVIM_APPNAME specified by the options
             # and that it has all of the other options set as specified.
-
-            myNvimConfigWithHmAttrs = finalConfig // {
-                extraMakeConfigArgs = finalConfig.extraMakeConfigArgs // cfg.extraMakeConfigArgs;
+            myNvimHmConfig = neovimConfig //
+                {
+                    wrapperArgs = neovimConfig.wrapperArgs ++ [
+                        "NVIM_APPNAME"
+                        cfg.appName
+                    ];
             };
+
+            # Make sure that `wrapRc` is false so that we can use the init.lua file in this repo.
+            myNvimHmPackage = wrapNeovimUnstable neovim-unwrapped myNvimHmConfig // { wrapRc = false; };
+
+            # For now, wrap this as we build it up...
+            myNvimHmWrapper = pkgs.writeShellScriptBin "my-nvim-dev" ''
+                ${myNvimHmPackage}/bin/nvim "$@"
+            '';
+
         in lib.mkIf cfg.enable {
-            # Include extra packages to be installed by home manager so they can be accessed by normal means.
-            home.packages = extraPackages;
+            home.packages = [ myNvimHmWrapper ];
 
             # Symlink where neovim will expect the package to where 
             home.file."${config.xdg.configHome}/${cfg.appName}".source = config.lib.file.mkOutOfStoreSymlink cfg.pathToMyNvimSource;
-        };
 
-# let
-#     # My actual neovim package.
-#     myNvim = (pkgs.callPackage ../../pkgs/my-nvim {}).package;
-#     my-nvim-wrapper = pkgs.writeShellScriptBin "my-nvim" ''
-#         ${myNvim}/bin/nvim "$@"
-#     '';
-# 
-#     # My dev neovim package with hot reloading.
-#     pathToMyNvimSource = "${config.home.homeDirectory}/my-nixos-config/pkgs/my-nvim";
-# 
-#     # By doing this, we force neovim to use the my-nvim config that is later symlinked to 
-#     # the files in this repo. This allows for hot-reloading of the config without a nix rebuild.
-#     my-nvim-dev-wrapper = pkgs.writeShellScriptBin "my-nvim-dev" ''
-#         NVIM_APPNAME=my-nvim ${pkgs.neovim-unwrapped}/bin/nvim "$@"
-#     '';
-# in
-# {
-#   # My custom neovim package.
-#   home.packages = [
-#     my-nvim-wrapper
-#     my-nvim-dev-wrapper
-#   ];
-# 
-# }
+            # TODO: renable this once I use this as my primary editor.
+            # home.sessionVariables = lib.mkIf cfg.defaultEditor { EDITOR = "nvim"; };
+        };
     };
 }
