@@ -1,7 +1,7 @@
 local function init(config)
     vim.print(vim.inspect(config))
 
-    require 'my-nvim-config.keymaps'
+    require 'my-nvim-config.keymap'
     require 'my-nvim-config.options'
     require 'my-nvim-config.files'
 
