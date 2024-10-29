@@ -48,6 +48,8 @@ let
                 # TODO: Not sure I need all of this?
                 nvim-treesitter.withAllGrammars
                 nvim-lspconfig
+
+                oil-nvim
             ];
         in
             basePlugins

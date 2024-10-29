@@ -3,13 +3,14 @@ local function init(config)
 
     require 'my-nvim-config.keymaps'
     require 'my-nvim-config.options'
+    require 'my-nvim-config.files'
 
     if config.features.neovimDev.enable then
         require 'my-nvim-config.nvimdev'
     end
 end
 
-vim.print("hello there from custom plugin edited via symlink")
+vim.print("hello there from custom plugin edited via symlink...")
 
 return {
     init = init,
