@@ -1,1 +1,1 @@
-require 'my-nvim-config'.init({ ["neovimDevSupport"] = true, ["greeting"] = "hello there" })
+require 'my-nvim-config'.init({ ["features"] = { ["neovimDev"] = { ["enable"] = true } } })

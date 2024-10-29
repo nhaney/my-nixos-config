@@ -4,7 +4,7 @@ local function init(config)
     require 'my-nvim-config.keymaps'
     require 'my-nvim-config.options'
 
-    if config.neovimDevSupport then
+    if config.features.neovimDev.enable then
         require 'my-nvim-config.nvimdev'
     end
 end
