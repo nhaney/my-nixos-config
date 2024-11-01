@@ -10,6 +10,7 @@
     makeNeovimConfigOverrides ? {},
     # Base packages required.
     ripgrep,
+    fzf,
 ...}:
 let 
 
@@ -36,7 +37,10 @@ let
     # Given a configuration, return the required external nix packages (LSP, utilities, debug servers, etc.)
     pkgsForConfig = config:
         let
-            basePackages = [ripgrep];
+            basePackages = [
+		# Used for search
+	    	ripgrep fzf
+	    ];
         in
             basePackages 
                 ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages;
@@ -45,10 +49,30 @@ let
     pluginsForConfig = config:
         let
             basePlugins = with vimPlugins; [
+		# Common dependencies
+		plenary-nvim
+		nvim-web-devicons
+
+		# Search
+		telescope-nvim
+		telescope-fzf-native-nvim
+		telescope-ui-select-nvim
+
+		# Syntax highlighting
                 # TODO: Not sure I need all of this?
                 nvim-treesitter.withAllGrammars
+
+		# LSP
                 nvim-lspconfig
 
+		# Completion plugins
+		nvim-cmp
+		cmp-nvim-lsp
+		cmp-buffer
+		cmp-path
+		cmp-cmdline
+
+		# File browsing
                 oil-nvim
             ];
         in

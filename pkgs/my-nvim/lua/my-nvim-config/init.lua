@@ -3,7 +3,10 @@ local function init(config)
 
     require 'my-nvim-config.keymap'
     require 'my-nvim-config.options'
+    require 'my-nvim-config.search'
     require 'my-nvim-config.files'
+    require 'my-nvim-config.lsp'
+    require 'my-nvim-config.completion'
 
     if config.features.neovimDev.enable then
         require 'my-nvim-config.nvimdev'

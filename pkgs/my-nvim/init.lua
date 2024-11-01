@@ -1,1 +1,1 @@
-require 'my-nvim-config'.init({ ["features"] = { ["neovimDev"] = { ["enable"] = true } } })
+require 'my-nvim-config'.init({ ["features"] = { ["neovimDev"] = { ["enable"] = true } }, ["test"] = "value"})
