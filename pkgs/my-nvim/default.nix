@@ -53,6 +53,9 @@ let
 		plenary-nvim
 		nvim-web-devicons
 
+		# Convenience
+		vim-sleuth
+
 		# Search
 		telescope-nvim
 		telescope-fzf-native-nvim
