@@ -1,7 +1,7 @@
 M = {}
 
 function M.setup(config)
-    vim.print(vim.inspect(config))
+    -- vim.print(vim.inspect(config))
 
     require 'my-nvim-config.keymap'
     require 'my-nvim-config.options'
@@ -9,6 +9,7 @@ function M.setup(config)
     require 'my-nvim-config.files'
     require 'my-nvim-config.lsp'
     require 'my-nvim-config.completion'
+    require 'my-nvim-config.format'
 
     if config.features.neovimDev.enable then
         require 'my-nvim-config.features.neovim-dev'.setup(config.features.neovimDev)

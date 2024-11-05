@@ -74,6 +74,9 @@ let
 		# LSP
                 nvim-lspconfig
 
+                # Formatting
+                conform-nvim
+
 		# Completion plugins
 		nvim-cmp
 		cmp-nvim-lsp
