@@ -1,4 +1,6 @@
-local function init(config)
+M = {}
+
+function M.setup(config)
     vim.print(vim.inspect(config))
 
     require 'my-nvim-config.keymap'
@@ -9,12 +11,14 @@ local function init(config)
     require 'my-nvim-config.completion'
 
     if config.features.neovimDev.enable then
-        require 'my-nvim-config.nvimdev'
+        require 'my-nvim-config.features.neovim-dev'.setup(config.features.neovimDev)
+    end
+
+    if config.features.nix.enable then
+        require 'my-nvim-config.features.nix'.setup(config.features.nix)
     end
 end
 
 vim.print("hello there from custom plugin edited via symlink...")
 
-return {
-    init = init,
-}
+return M

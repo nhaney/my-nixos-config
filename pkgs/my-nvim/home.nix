@@ -4,7 +4,7 @@ let
     # The base config with no optional features added.
     baseConfig = {
         greeting = "base greeting from package.";
-        features = { neovimDev.enable = true; };
+        features = { neovimDev.enable = true; nix.enable = true; };
     };
 
     cfg = config.programs.my-nvim;
@@ -35,7 +35,7 @@ in
             };
 
             appName = lib.mkOption {
-                type = lib.types.string;
+                type = lib.types.str;
                 default = "my-nvim";
                 description = ''
                     The name that the neovim executable will use as its `NVIM_APPNAME` environment

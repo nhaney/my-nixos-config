@@ -17,7 +17,12 @@ let
     # The base config with no optional features added.
     baseConfig = {
         greeting = "base greeting from package.";
-        features = { neovimDev.enable = true; };
+        features = {
+            neovimDev.enable = true;
+            nix = {
+                enable = true;
+            };
+        };
     };
 
 
@@ -43,7 +48,8 @@ let
 	    ];
         in
             basePackages 
-                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages;
+                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages
+                ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages;
 
     # Given a configuration, return the nix packages neovim plugins that are required.
     pluginsForConfig = config:
@@ -80,7 +86,8 @@ let
             ];
         in
             basePlugins
-                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins;
+                ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins
+                ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins;
 
     extraPackages = pkgsForConfig finalMyNvimConfig;
 
