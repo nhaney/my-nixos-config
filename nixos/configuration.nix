@@ -1,13 +1,19 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./silverbullet.nix
+  ];
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;
@@ -60,7 +66,7 @@
     enable = true;
     layout = "us";
     xkbVariant = "";
-    videoDrivers = ["nvidia"];
+    videoDrivers = [ "nvidia" ];
 
     displayManager = {
       defaultSession = "none+i3";
@@ -68,7 +74,7 @@
       autoLogin.user = "nigel";
       # Set up primary ultrawide monitor with correct resolution and position.
       setupCommands = ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
+        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
       '';
     };
 
@@ -120,7 +126,6 @@
     })
   ];
 
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -147,10 +152,14 @@
   users.users.nigel = {
     isNormalUser = true;
     description = "Nigel Haney";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -164,27 +173,27 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      wget
-      git
-      curl
-      home-manager
-      pavucontrol
-      tailscale
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    curl
+    home-manager
+    pavucontrol
+    tailscale
   ];
 
   hardware.opengl = {
-      enable = true;
-      driSupport32Bit = true;
+    enable = true;
+    driSupport32Bit = true;
   };
-  
+
   hardware.nvidia = {
-      modesetting.enable = true;
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.bluetooth.enable = true;
@@ -218,7 +227,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   virtualisation.docker.enable = true;
 
@@ -228,6 +240,11 @@
 
   security.pam.loginLimits = [
     # Possibly needed for RPCS3???
-    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
+    {
+      domain = "*";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
   ];
 }

@@ -20,6 +20,4 @@ function M.setup(config)
     end
 end
 
-vim.print("hello there from custom plugin edited via symlink...")
-
 return M
