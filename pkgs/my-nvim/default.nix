@@ -104,6 +104,7 @@ let
 
         # Markdown
         render-markdown-nvim
+        zen-mode-nvim
       ];
     in
     basePlugins

@@ -1,29 +1,29 @@
-# My NixOS and Home Manager configurations
+# my-nixos-config
 
-This repo contains my NixOS config for my machines and home manager configs for the machines.
+This repo contains my:
+  * NixOS machine configurations (nixosConfigurations)
+  * Standalone home manager configurations (homeConfigurations)
+  * Nix helper functions (lib)
 
-## TODO
+## NixOS configuration installation
 
-### NixOS
+From the root of the repo:
 
-* [x] Fix Windows time.
-* [ ] Use only i3 without a desktop environment
-    * [x] Install alacritty terminal
-    * [ ] Install fonts
-      * [ ] Create consistent fonts across GUI
-    * [ ] Install bluetooth program
-    * [ ] Install audio program
-    * [ ] Install display program (can I use nvidia for this?)
-      * [ ] Make sure that the correct resolution is setup for my monitor when it boots up (5110x1440, 240hz)
-    * [ ] Network GUI?
-      * [ ] nm-connection-editor will work I think?
+```bash
+$ sudo nixos-rebuild switch --flake .#desktop
+```
 
-### Home manager
+## Home manager installation (standalone)
 
-* [ ] Incorporate existing neovim configuration into nixvim
-* [ ] Separate out terminal and GUI apps in config
-  * See https://github.com/GaetanLepage/dotfiles/tree/11c372616dad8ee330bc1583b80978e50976c63f/home/modules for inspo
-* [ ] Configure alacritty with home-manager
-* [ ] Configure i3 with home-manager
-* [ ] Configure tmux with home-manager
+```bash
+$ home-manager switch --flake .#your-username@your-hostname
+```
+
+## Lib functions exposed
+
+### `lib.mkMyNeovim`
+
+Used to create a custom neovim derivation so I can have a consistent experience between projects.
+
+To for usage details, see [the implementation of the function here](./pkgs/my-nvim/default.nix).
 
