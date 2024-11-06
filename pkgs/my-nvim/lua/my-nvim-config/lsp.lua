@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		--    See `:help CursorHold` for information about when this is executed
 		--
 		-- When you move your cursor, the highlights will be cleared (the second autocommand).
-		-- local client = vim.lsp.get_client_by_id(event.data.client_id)
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		-- if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 		-- 	local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
 		-- 	vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -132,4 +132,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- TODO: apply this to all lsps that are setup in the future.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-

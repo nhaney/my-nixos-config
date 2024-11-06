@@ -18,6 +18,7 @@
   # Base packages required.
   ripgrep,
   fzf,
+  markdown-oxide,
   ...
 }:
 let
@@ -46,7 +47,7 @@ let
     src = ./.;
   };
 
-  myPlugins = vimPlugins // (callPackage ./plugins.nix {});
+  myPlugins = vimPlugins // (callPackage ./plugins.nix { });
 
   # Given a configuration, return the required external nix packages (LSP, utilities, debug servers, etc.)
   pkgsForConfig =
@@ -56,6 +57,8 @@ let
         # Used for search
         ripgrep
         fzf
+        # Markdown language server
+        markdown-oxide
       ];
     in
     basePackages

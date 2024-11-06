@@ -26,3 +26,4 @@ This repo contains my NixOS config for my machines and home manager configs for 
 * [ ] Configure alacritty with home-manager
 * [ ] Configure i3 with home-manager
 * [ ] Configure tmux with home-manager
+
