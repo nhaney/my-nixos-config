@@ -8,6 +8,7 @@
   services.silverbullet = {
     enable = true;
     listenAddress = "0.0.0.0";
+    # TODO: Do this dynamically? Or with an option. Maybe this would be better set up as a home directory?
     user = "nigel";
   };
 

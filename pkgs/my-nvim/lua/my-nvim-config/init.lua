@@ -10,6 +10,7 @@ function M.setup(config)
     require 'my-nvim-config.lsp'
     require 'my-nvim-config.completion'
     require 'my-nvim-config.format'
+    require 'my-nvim-config.markdown'
 
     if config.features.neovimDev.enable then
         require 'my-nvim-config.features.neovim-dev'.setup(config.features.neovimDev)
