@@ -105,6 +105,9 @@ let
         # Markdown
         render-markdown-nvim
         zen-mode-nvim
+
+        # Buffer and status lines
+        bufferline-nvim
       ];
     in
     basePlugins
