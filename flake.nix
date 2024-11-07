@@ -1,5 +1,5 @@
 {
-  description = "NixOS and home-manager configurations for my machines.";
+  description = "My collection of my NixOS modules and configurations, home-manager modules and configurations, and helper functions.";
 
   inputs = {
     # Nixpkgs input, define version of nixpkgs to use.
