@@ -108,6 +108,10 @@ let
 
         # Buffer and status lines
         bufferline-nvim
+        lualine-nvim
+
+        # Themes
+        base16-nvim
       ];
     in
     basePlugins

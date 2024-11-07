@@ -20,6 +20,8 @@ function M.setup(config)
     if config.features.nix.enable then
         require 'my-nvim-config.features.nix'.setup(config.features.nix)
     end
+
+    require 'my-nvim-config.theme'
 end
 
 return M
