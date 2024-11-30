@@ -238,8 +238,8 @@
 
   programs.gamemode.enable = true;
 
+  # Possibly needed for RPCS3???
   security.pam.loginLimits = [
-    # Possibly needed for RPCS3???
     {
       domain = "*";
       item = "memlock";

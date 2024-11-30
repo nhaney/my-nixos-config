@@ -71,6 +71,24 @@
             ./nixos/configuration.nix
           ];
         };
+
+        firelink = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/firelink/nixos
+          ];
+        };
+
+        catacombs = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/catacombs/nixos
+          ];
+        };
       };
 
       # My standalone home-manager configurations. This is separate from my NixOS configuration to allow for running
@@ -91,6 +109,36 @@
             ./home-manager/common
             ./home-manager/desktop
             slippi.homeManagerModules.default
+          ];
+        };
+
+        "nigel@firelink" = home-manager.lib.homeManagerConfiguration {
+          # Use the packages specified above for this home manager configuration.
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit firefox-addons;
+            inherit nixvim;
+            inherit stylix;
+          };
+
+          # Home manager modules used.
+          modules = [
+            ./hosts/firelink/home
+          ];
+        };
+
+        "nigel@catacombs" = home-manager.lib.homeManagerConfiguration {
+          # Use the packages specified above for this home manager configuration.
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit firefox-addons;
+            inherit nixvim;
+            inherit stylix;
+          };
+
+          # Home manager modules used.
+          modules = [
+            ./hosts/catacombs/home
           ];
         };
       };
