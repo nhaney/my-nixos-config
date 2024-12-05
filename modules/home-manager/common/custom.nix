@@ -1,6 +1,6 @@
 {
   imports = [
-    ../../pkgs/my-nvim/home.nix
+    ../../../pkgs/my-nvim/home.nix
   ];
 
   programs.my-nvim.enable = true;

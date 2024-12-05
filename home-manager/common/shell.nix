@@ -1,3 +1,3 @@
+{ }:
 {
-  programs.fish.enable = true;
 }

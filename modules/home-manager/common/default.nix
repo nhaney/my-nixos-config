@@ -6,6 +6,5 @@
     ./fzf.nix
     ./tmux.nix
     ./custom.nix
-    ./shell.nix
   ];
 }

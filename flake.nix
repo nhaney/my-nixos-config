@@ -119,6 +119,7 @@
             inherit firefox-addons;
             inherit nixvim;
             inherit stylix;
+            inherit slippi;
           };
 
           # Home manager modules used.
