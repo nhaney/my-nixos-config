@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -16,13 +16,13 @@
         # extraConfig = "set -g @resurrect-strategy-nvim 'session'";
       }
       # See: https://github.com/tmux-plugins/tmux-continuum
-      {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '15'
-        '';
-      }
+      #{
+      #  plugin = tmuxPlugins.continuum;
+      #  extraConfig = ''
+      #    set -g @continuum-restore 'on'
+      #    set -g @continuum-save-interval '15'
+      #  '';
+      #}
     ];
 
     extraConfig = ''
@@ -66,6 +66,36 @@
 
       # styling
       set-option -g status-left "#{?window_zoomed_flag, 🔍 ,}"
+
+
+      # sesh configuration - https://github.com/joshmedeski/sesh
+      bind-key "T" run-shell "${pkgs.sesh}/bin/sesh connect \"$(
+        ${pkgs.sesh}/bin/sesh list --icons | ${pkgs.fzf}/bin/fzf-tmux -p 55%,60% \
+          --no-sort --ansi --border-label ' ${pkgs.sesh}/bin/sesh ' --prompt '⚡  ' \
+          --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+          --bind 'tab:down,btab:up' \
+          --bind 'ctrl-a:change-prompt(⚡  )+reload(${pkgs.sesh}/bin/sesh list --icons)' \
+          --bind 'ctrl-t:change-prompt(🪟  )+reload(${pkgs.sesh}/bin/sesh list -t --icons)' \
+          --bind 'ctrl-g:change-prompt(⚙️  )+reload(${pkgs.sesh}/bin/sesh list -c --icons)' \
+          --bind 'ctrl-x:change-prompt(📁  )+reload(${pkgs.sesh}/bin/sesh list -z --icons)' \
+          --bind 'ctrl-f:change-prompt(🔎  )+reload(${pkgs.fd}/bin/fd -H -d 2 -t d -E .Trash . ~)' \
+          --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(${pkgs.sesh}/bin/sesh list --icons)' \
+      )\""
+
+      bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
+      set -g detach-on-destroy off  # don't exit from tmux when closing a session
+
+      bind -N "switch to root session (via ${pkgs.sesh}/bin/sesh) " 9 run-shell "${pkgs.sesh}/bin/sesh connect --root \'$(pwd)\'"
     '';
   };
+
+  # To use sesh outside of tmux for other purposes. Probably not needed.
+  home.packages = [ pkgs.sesh ];
+
+  home.file."${config.xdg.configHome}/sesh/sesh.toml".text = ''
+    [[session]]
+    name = "nix config files"
+    path = "${config.home.homeDirectory}/my-nixos-config"
+    startup_command = "nvim ."
+  '';
 }
