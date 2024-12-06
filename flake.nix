@@ -19,13 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nixvim input, used for configuring neovim.
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Stylix input, used for styling desktop.
+    # Stylix input, used for styling desktop consitently across apps.
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +38,6 @@
       nixpkgs,
       home-manager,
       firefox-addons,
-      nixvim,
       stylix,
       slippi,
     }@inputs:
@@ -60,21 +53,12 @@
     in
     {
       # My NixOS configurations.
-      # Rebuild with sudo nixos-rebuild switch --flake .#desktop
+      # Rebuild with sudo nixos-rebuild switch --flake .#<name of host>
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            slippi.nixosModules.default
-            ./nixos/configuration.nix
-          ];
-        };
-
         firelink = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
+            inherit slippi;
           };
           modules = [
             ./hosts/firelink/nixos
@@ -95,29 +79,11 @@
       # home manager on machines that are not running NixOS.
       # To run: home-manager switch --flake .#your-username@your-hostname
       homeConfigurations = {
-        "nigel@desktop" = home-manager.lib.homeManagerConfiguration {
-          # Use the packages specified above for this home manager configuration.
-          inherit pkgs;
-          extraSpecialArgs = {
-            inherit firefox-addons;
-            inherit nixvim;
-            inherit stylix;
-          };
-
-          # Home manager modules used.
-          modules = [
-            ./home-manager/common
-            ./home-manager/desktop
-            slippi.homeManagerModules.default
-          ];
-        };
-
         "nigel@firelink" = home-manager.lib.homeManagerConfiguration {
           # Use the packages specified above for this home manager configuration.
           inherit pkgs;
           extraSpecialArgs = {
             inherit firefox-addons;
-            inherit nixvim;
             inherit stylix;
             inherit slippi;
           };
@@ -133,7 +99,6 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit firefox-addons;
-            inherit nixvim;
             inherit stylix;
           };
 

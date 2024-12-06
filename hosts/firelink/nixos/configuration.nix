@@ -11,7 +11,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./silverbullet.nix
   ];
 
   # Bootloader.
@@ -24,7 +23,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "firelink"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -232,18 +231,4 @@
   ];
 
   virtualisation.docker.enable = true;
-
-  programs.steam.enable = true;
-
-  programs.gamemode.enable = true;
-
-  # Possibly needed for RPCS3???
-  security.pam.loginLimits = [
-    {
-      domain = "*";
-      item = "memlock";
-      type = "-";
-      value = "unlimited";
-    }
-  ];
 }
