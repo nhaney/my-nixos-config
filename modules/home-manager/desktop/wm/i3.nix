@@ -11,8 +11,8 @@ let
   ws8 = "8";
   ws9 = "9";
 
-  opaqueWindows = [ "Rofi" "firefox" "i3lock" ];
 in
+# opaqueWindows = [ "Rofi" "firefox" "i3lock" ];
 {
   home.packages = with pkgs; [
     # Used for clipboard.
@@ -37,7 +37,7 @@ in
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty --command tmux";
-    plugins = [pkgs.rofi-emoji];
+    plugins = [ pkgs.rofi-emoji ];
   };
 
   # Enable and run flameshot. Used for screenshotting.
@@ -46,7 +46,7 @@ in
     settings = {
       General = {
         showHelp = false;
-	disabledTrayIcon = true;
+        disabledTrayIcon = true;
       };
     };
   };
@@ -65,7 +65,7 @@ in
   # look into this for a more advanced version: https://github.com/claudius-kienle/polybar-pipewire-control/blob/master/README.md
   # Maybe try and create a derivation of that?
   home.file."${config.xdg.configHome}/polybar/pipewire.sh" = {
-    source = "${(pkgs.callPackage ./polybar_pipewire_script.nix {})}/bin/polybar_pipewire_script";
+    source = "${(pkgs.callPackage ./polybar_pipewire_script.nix { })}/bin/polybar_pipewire_script";
     executable = true;
   };
 
@@ -77,7 +77,7 @@ in
       enable = true;
 
       config = rec {
-        bars = [];
+        bars = [ ];
 
         modifier = "Mod4";
 

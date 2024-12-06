@@ -10,13 +10,13 @@ This repo contains my:
 From the root of the repo:
 
 ```bash
-$ sudo nixos-rebuild switch --flake .#desktop
+$ sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
 ## Home manager installation (standalone)
 
 ```bash
-$ home-manager switch --flake .#your-username@your-hostname
+$ home-manager switch --flake .#your-username@<hostname>
 ```
 
 ## Lib functions exposed

@@ -16,10 +16,9 @@
   # direnv for automatic switching of project directories to development shell.
   programs.direnv = {
     enable = true;
-    enableBashIntegration = true;
+    # enableFishIntegration = true;
     nix-direnv.enable = true;
   };
-  programs.bash.enable = true;
 
   programs.nix-index.enable = true;
 }
