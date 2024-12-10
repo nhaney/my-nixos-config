@@ -73,6 +73,15 @@
             ./hosts/catacombs/nixos
           ];
         };
+
+        archives = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/archives/nixos
+          ];
+        };
       };
 
       # My standalone home-manager configurations. This is separate from my NixOS configuration to allow for running
@@ -105,6 +114,16 @@
           # Home manager modules used.
           modules = [
             ./hosts/catacombs/home
+          ];
+        };
+
+        "nigel@archives" = home-manager.lib.homeManagerConfiguration {
+          # Use the packages specified above for this home manager configuration.
+          inherit pkgs;
+
+          # Home manager modules used.
+          modules = [
+            ./hosts/archives/home
           ];
         };
       };
