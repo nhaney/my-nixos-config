@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 # Various CLI tools that I use and their configs.
 {
   programs.fzf.enable = true;
