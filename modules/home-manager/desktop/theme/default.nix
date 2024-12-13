@@ -1,4 +1,10 @@
-{ pkgs, config, lib, stylix, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  stylix,
+  ...
+}:
 {
   imports = [
     stylix.homeManagerModules.stylix
@@ -33,7 +39,7 @@
 
   # For now disable on vim because it isn't applying correctly.
   stylix.targets.nixvim.enable = false;
-  
+
   stylix.fonts = {
     serif = {
       package = pkgs.dejavu_fonts;
@@ -46,7 +52,7 @@
     };
 
     monospace = {
-      package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; } );
+      package = pkgs.nerd-fonts.fira-code;
       name = "FiraCode Nerd Font";
     };
 

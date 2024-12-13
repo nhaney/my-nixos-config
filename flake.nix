@@ -49,6 +49,11 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+
+        # TODO: Fix this when roslyn-ls updates package version.
+        config.permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+        ];
       };
     in
     {
