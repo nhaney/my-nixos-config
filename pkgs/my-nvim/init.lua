@@ -7,7 +7,9 @@ require 'my-nvim-config'.setup({
             enable = true,
             -- This needs to change based on where this flake was cloned.
             nixPkgsFlakePath = "/home/nigel/my-nixos-config",
+        },
+        dotnet = {
+            enable = true,
         }
     },
-    ["test"] = "value"
 })

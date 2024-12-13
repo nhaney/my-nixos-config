@@ -2,7 +2,7 @@ M = {}
 
 function M.setup(config)
     -- See https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md for more information on how to configure nixd.
-    require'lspconfig'.nixd.setup {
+    require 'lspconfig'.nixd.setup {
         cmd = { "nixd" },
         settings = {
             nixpkgs = {
@@ -17,7 +17,7 @@ function M.setup(config)
     }
 
     -- nixd doesn't always go to definition properly.
-    require'lspconfig'.nil_ls.setup {}
+    require 'lspconfig'.nil_ls.setup {}
 end
 
 return M

@@ -31,6 +31,9 @@ let
       nix = {
         enable = true;
       };
+      dotnet = {
+        enable = true;
+      };
     };
   };
 
@@ -63,7 +66,8 @@ let
     in
     basePackages
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages
-    ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages;
+    ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages
+    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).packages;
 
   # Given a configuration, return the nix packages neovim plugins that are required.
   pluginsForConfig =
@@ -116,7 +120,8 @@ let
     in
     basePlugins
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins
-    ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins;
+    ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins
+    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).plugins;
 
   extraPackages = pkgsForConfig finalMyNvimConfig;
 

@@ -97,5 +97,9 @@
     name = "nix config files"
     path = "${config.home.homeDirectory}/my-nixos-config"
     startup_command = "nvim ."
+    [[session]]
+    name = "notes"
+    path = "${config.home.homeDirectory}"
+    startup_command = "ssh archives -t 'cd /var/lib/silverbullet/; nvim .; fish'"
   '';
 }
