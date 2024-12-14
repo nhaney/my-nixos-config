@@ -12,7 +12,8 @@ let
   # sdkOverride = dotnetCorePackages.sdk_9_0;
   # roslyn-ls-no-sdk6 = roslyn-ls.overrideAttrs { dotnet-sdk = dotnet-sdk_9; };
 
-  # Build the roslyn-nvim fork instead of the one in nixpkgs. TODO: upstream this if it works.
+  # Build the roslyn-nvim fork instead of the one in nixpkgs.
+  # Can remove once upstream PR is merged: https://github.com/NixOS/nixpkgs/pull/365083
   roslyn-nvim-fork = vimUtils.buildVimPlugin {
     pname = "roslyn.nvim";
     version = "2024-12-13";

@@ -10,6 +10,9 @@ require 'my-nvim-config'.setup({
         },
         dotnet = {
             enable = true,
+        },
+        python = {
+            enable = true,
         }
     },
 })

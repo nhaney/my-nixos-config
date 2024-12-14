@@ -34,6 +34,9 @@ let
       dotnet = {
         enable = true;
       };
+      python = {
+        enable = true;
+      };
     };
   };
 
@@ -67,7 +70,8 @@ let
     basePackages
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages
-    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).packages;
+    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).packages
+    ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages;
 
   # Given a configuration, return the nix packages neovim plugins that are required.
   pluginsForConfig =
@@ -121,7 +125,8 @@ let
     basePlugins
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins
-    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).plugins;
+    ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).plugins
+    ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages;
 
   extraPackages = pkgsForConfig finalMyNvimConfig;
 

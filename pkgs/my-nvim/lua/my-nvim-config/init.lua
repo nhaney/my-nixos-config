@@ -25,6 +25,10 @@ function M.setup(config)
         require 'my-nvim-config.features.dotnet'.setup(config.features.dotnet)
     end
 
+    if config.features.python.enable then
+        require 'my-nvim-config.features.python'.setup(config.features.python)
+    end
+
     require 'my-nvim-config.theme'
 end
 
