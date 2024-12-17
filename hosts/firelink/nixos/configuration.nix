@@ -6,7 +6,6 @@
   pkgs,
   ...
 }:
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -57,39 +56,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # Configure GUI desktop environment (i3).
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    xkbVariant = "";
-    videoDrivers = [ "nvidia" ];
-
-    displayManager = {
-      defaultSession = "none+i3";
-      autoLogin.enable = true;
-      autoLogin.user = "nigel";
-      # Set up primary ultrawide monitor with correct resolution and position.
-      setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-0 --mode 5120x1440 --pos 0x0 -r 240
-      '';
-    };
-
-    windowManager.i3 = {
-      enable = true;
-      #package = pkgs.i3-gaps;
-      #extraPackages = with pkgs; [
-      #  dmenu
-      #  i3status
-      #  i3lock
-      #  i3blocks
-      #];
-    };
-
-    desktopManager = {
-      xterm.enable = false;
-    };
   };
 
   programs.dconf.enable = true;
@@ -175,20 +141,6 @@
     pavucontrol
     tailscale
   ];
-
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
