@@ -72,20 +72,14 @@ in
       myNvimHmPackage = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
         myNvimHmConfig // { wrapRc = false; }
       );
-
-      # For now, wrap this as we build it up...
-      # myNvimHmWrapper = pkgs.writeShellScriptBin "my-nvim-dev" ''
-      #   ${myNvimHmPackage}/bin/nvim "$@"
-      # '';
-
     in
     lib.mkIf cfg.enable {
-      # TODO: change this to myNvimHmPackage when satisfied.
       home.packages = [ myNvimHmPackage ];
 
-      # Symlink where neovim will expect the package to where 
-      home.file."${config.xdg.configHome}/${cfg.appName}".source = config.lib.file.mkOutOfStoreSymlink cfg.pathToMyNvimSource;
+      # Symlink where neovim will expect the package to where
+      home.file."${config.xdg.configHome}/${cfg.appName}".source =
+        config.lib.file.mkOutOfStoreSymlink cfg.pathToMyNvimSource;
 
-      home.sessionVariables = lib.mkIf cfg.defaultEditor { EDITOR = "nvim"; };
+      home.sessionVariables = lib.mkIf cfg.defaultEditor { EDITOR = "${myNvimHmPackage}/bin/nvim"; };
     };
 }
