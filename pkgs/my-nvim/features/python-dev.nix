@@ -9,5 +9,5 @@
     basedpyright
     ruff
   ];
-  plugins = lib.optionals features.dotnet.enable [ ];
+  plugins = lib.optionals features.python.enable [ ];
 }

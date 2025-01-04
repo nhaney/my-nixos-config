@@ -1,7 +1,9 @@
-require('render-markdown').setup()
+require('render-markdown').setup({
+    file_types = { "markdown", "Avante" },
+})
 
 -- An example nvim-lspconfig capabilities setting
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('my-nvim-config.lsp').get_capabilities()
 
 require("lspconfig").markdown_oxide.setup({
     -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the

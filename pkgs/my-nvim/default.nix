@@ -37,6 +37,9 @@ let
       python = {
         enable = true;
       };
+      llm = {
+        enable = true;
+      };
     };
   };
 
@@ -71,7 +74,8 @@ let
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).packages
-    ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages;
+    ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages
+    ++ (callPackage ./features/llm.nix { features = config.features; }).packages;
 
   # Given a configuration, return the nix packages neovim plugins that are required.
   pluginsForConfig =
@@ -101,11 +105,7 @@ let
         conform-nvim
 
         # Completion plugins
-        nvim-cmp
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
+        blink-cmp
 
         # File browsing
         oil-nvim
@@ -126,10 +126,10 @@ let
     ++ (callPackage ./features/neovim-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).plugins
-    ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages;
+    ++ (callPackage ./features/python-dev.nix { features = config.features; }).plugins
+    ++ (callPackage ./features/llm.nix { features = config.features; }).plugins;
 
   extraPackages = pkgsForConfig finalMyNvimConfig;
-
 in
 rec {
   # The package for my custom neovim distribution.

@@ -22,3 +22,4 @@ vim.opt.timeoutlen = 300
 
 vim.opt.scrolloff = 10
 
+vim.g.have_nerd_font = true

@@ -1,7 +1,8 @@
 M = {}
 
 function M.setup(config)
-    require'lspconfig'.lua_ls.setup{}
+    local capabilities = require('my-nvim-config.lsp').get_capabilities()
+    require 'lspconfig'.lua_ls.setup { capabilities = capabilities }
     require('lazydev').setup()
 end
 

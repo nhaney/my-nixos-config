@@ -1,3 +1,8 @@
 {
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    shellInit = ''
+      set -gx EDITOR nvim
+    '';
+  };
 }
