@@ -96,6 +96,7 @@ let
 
         # Syntax highlighting
         # TODO: Not sure I need all of this?
+        # This isn't actually working...
         nvim-treesitter.withAllGrammars
 
         # LSP

@@ -6,6 +6,10 @@ function M.setup(config)
     local capabilities = require('my-nvim-config.lsp').get_capabilities()
     require 'lspconfig'.nixd.setup {
         capabilities = capabilities,
+        -- Semantic highlighting doesn't work well for nix. Treesitter grammar is better for now.
+        on_init = function(client, _)
+            client.server_capabilities.semanticTokensProvider = nil
+        end,
         cmd = { "nixd" },
         handlers = {
             ["textDocument/definition"] = function(...)
@@ -25,7 +29,12 @@ function M.setup(config)
     }
 
     -- nixd doesn't always go to definition properly, so use nil_ls for this instead.
-    require 'lspconfig'.nil_ls.setup { capabilities = capabilities }
+    require 'lspconfig'.nil_ls.setup { capabilities = capabilities,
+        -- Semantic highlighting doesn't work well for nix. Treesitter grammar is better for now.
+        on_init = function(client, _)
+            client.server_capabilities.semanticTokensProvider = nil
+        end,
+    }
 end
 
 return M

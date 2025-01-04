@@ -6,6 +6,7 @@ function M.setup(config)
     require 'my-nvim-config.options'
     require 'my-nvim-config.search'
     require 'my-nvim-config.files'
+    require 'my-nvim-config.treesitter'.setup()
     require 'my-nvim-config.lsp'.setup()
     require 'my-nvim-config.completion'.setup()
     require 'my-nvim-config.format'

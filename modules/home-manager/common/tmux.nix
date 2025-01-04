@@ -5,7 +5,7 @@
     shortcut = "a";
     escapeTime = 0;
     mouse = true;
-    terminal = "screen-256color";
+    terminal = "alacritty";
 
     plugins = with pkgs; [
       tmuxPlugins.cpu
@@ -26,6 +26,9 @@
     ];
 
     extraConfig = ''
+      # Make color work properly in tmux.
+      set-option -sa terminal-features ',alacritty:RGB'
+
       # Set fish as the default shell.
       set -g default-command ${pkgs.fish}/bin/fish
       set -g default-shell ${pkgs.fish}/bin/fish
