@@ -88,6 +88,7 @@ let
 
         # Convenience
         vim-sleuth
+        which-key-nvim
 
         # Search
         telescope-nvim
@@ -101,6 +102,11 @@ let
 
         # LSP
         nvim-lspconfig
+
+        # DAP
+        nvim-dap
+        nvim-dap-ui
+        nvim-dap-virtual-text
 
         # Formatting
         conform-nvim
