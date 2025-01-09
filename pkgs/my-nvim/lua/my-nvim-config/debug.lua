@@ -1,59 +1,54 @@
-vim.fn.sign_define('DapBreakpoint', {
-    text = '⬤',
-    texthl = 'ErrorMsg',
-    linehl = '',
-    numhl = 'ErrorMsg'
-})
+-- vim.fn.sign_define('DapBreakpoint', {
+--     text = '⬤',
+--     texthl = 'ErrorMsg',
+--     linehl = '',
+--     numhl = 'ErrorMsg'
+-- })
+--
+--
+-- vim.fn.sign_define('DapBreakpointCondition', {
+--     text = '⬤',
+--     texthl = 'ErrorMsg',
+--     linehl = '',
+--     numhl = 'SpellBad'
+-- })
 
-
-vim.fn.sign_define('DapBreakpointCondition', {
-    text = '⬤',
-    texthl = 'ErrorMsg',
-    linehl = '',
-    numhl = 'SpellBad'
-})
 
 require("nvim-dap-virtual-text").setup()
-require("dapui").setup({
-    layouts = {
-        {
-            elements = {
-                {
-                    id = "scopes",
-                    size = 0.70
-                },
-                {
-                    id = "breakpoints",
-                    size = 0.10
-                },
-                {
-                    id = "stacks",
-                    size = 0.20
-                }
-            },
-            position = "left",
-            size = 50
-        },
-        {
-            elements = {
-                {
-                    id = "repl",
-                    size = 1
-                }
-            },
-            position = "bottom",
-            size = 10
-        }
-    },
-})
 
-vim.keymap.set('n', '<F1>', ":lua require'dap'clear_breakpoints()<CR>")
-vim.keymap.set('n', '<F2>', ":lua require'dapui'.float_element('scopes', {position = 'center',  enter = true })<CR>")
-vim.keymap.set('n', '<F3>', ":lua require'dapui'.float_element('console', {position = 'center'})<CR>")
-vim.keymap.set('n', '<F4>', ":lua require'dapui'.toggle()<CR>")
-vim.keymap.set('n', '<F5>', ":lua require'dap'.toggle_breakpoint()<CR>")
-vim.keymap.set('n', '<F6>', ":lua require'dap'.continue()<CR>")
-vim.keymap.set('n', '<F7>', ":lua require'dap'.restart()<CR>")
-vim.keymap.set('n', '<F8>', ":lua require'dap'.step_over()<CR>")
-vim.keymap.set('n', '<F9>', ":lua require'dap'.step_into()<CR>")
-vim.keymap.set('n', '<F10>', ":lua require'dap'.step_out()<CR>")
+local dap = require('dap')
+local ui = require('dapui')
+ui.setup()
+
+vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = "Debug: Continue" })
+vim.keymap.set('n', '<F10>', function() require('dap').step_over() end, { desc = "Debug: Step over" })
+vim.keymap.set('n', '<F11>', function() require('dap').step_into() end, { desc = "Debug: Step into" })
+vim.keymap.set('n', '<F12>', function() require('dap').step_out() end, { desc = "Debug: Step out" })
+vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end,
+    { desc = "Debug: Toggle breakpoint" })
+vim.keymap.set('n', '<Leader>dB', function() require('dap').set_breakpoint() end, { desc = "Debug: Set breakpoint" })
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end,
+    { desc = "Debug: Run last debugging configuration" })
+vim.keymap.set('n', '<Leader>dx', function() require('dap').terminate() end,
+    { desc = "Debug: Terminate debugging session" })
+-- Other options from nvim-dap. Not currently using them.
+--vim.keymap.set('n', '<Leader>lp',
+--    function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = "Debug: XXX" })
+--vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end, { desc = "Debug: XXX" })
+
+vim.keymap.set("n", "<leader>d?", function()
+    require("dapui").eval(nil, { enter = true })
+end, { desc = "Debug: Evaluate under cursor." })
+
+dap.listeners.before.attach.dapui_config = function()
+    ui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+    ui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+    ui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+    ui.close()
+end

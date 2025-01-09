@@ -6,59 +6,61 @@ function M.setup()
     require 'lspconfig'.ruff.setup { capabilities = capabilities }
     require 'lspconfig'.basedpyright.setup { capabilities = capabilities }
 
-    -- DAP configuration. Using dap-python with overrides for debugging.
+    local pythonPath = vim.fn.exepath('python')
 
-    require('dap-python').setup()
-
-    -- Launch python from the venv/dev shell for this to work.
-    require('dap-python').resolve_python = function()
-        return vim.fn.exepath('python')
-    end
-
-    -- Default to using pytest.
-    require('dap-python').test_runner = 'pytest'
-
-    -- This overrides the default settings of dap-python.
+    -- This overrides the defaults of dap-python with my custom debugpy executable that is compatible with nix.
     local dap = require('dap')
-    dap.adapters.python = function(cb, config)
-        if config.request == 'attach' then
-            ---@diagnostic disable-next-line: undefined-field
-            local port = (config.connect or config).port
-            ---@diagnostic disable-next-line: undefined-field
-            local host = (config.connect or config).host or '127.0.0.1'
-            cb({
-                type = 'server',
-                port = assert(port, '`connect.port` is required for a python `attach` configuration'),
-                host = host,
-                options = {
-                    source_filetype = 'python',
-                },
-            })
-        else
-            cb({
-                type = 'executable',
-                -- Will this work? Does debugpy nix package launch the adapter?
-                command = 'debugpy',
-                -- args = { '-m', 'debugpy.adapter' },
-                options = {
-                    source_filetype = 'python',
-                },
-            })
-        end
-    end
+    dap.adapters.python = {
+        type = 'executable',
+        command = 'my-debugpy',
+    }
 
     dap.configurations.python = {
         {
             type = 'python',
             request = 'launch',
-            name = 'Launch file',
+            name = 'file',
             program = '${file}',
-            pythonPath = function()
-                -- Uses the current python3. This means neovim needs to be launched in venv or dev shell with proper python for project.
-                return vim.fn.exepath('python')
+            justMyCode = false,
+            pythonPath = pythonPath,
+        },
+        {
+            type = 'python',
+            request = 'launch',
+            name = 'file:args',
+            program = '${file}',
+            args = function()
+                local args_string = vim.fn.input('Arguments: ')
+                local utils = require("dap.utils")
+                return utils.splitstr(args_string)
             end,
+            justMyCode = false,
+            pythonPath = pythonPath,
+        },
+        {
+            type = 'python',
+            request = 'launch',
+            name = 'file:doctest',
+            module = 'doctest',
+            args = { "${file}" },
+            noDebug = true,
+            pythonPath = pythonPath,
+        },
+        {
+            type = 'python',
+            request = 'launch',
+            name = 'file:pytest',
+            module = 'pytest',
+            args = { "${file}" },
+            pythonPath = pythonPath,
+            justMyCode = false,
         },
     }
+
+    -- Keymaps for python specific running configs. Currently dap-python individual test run is not working.
+    -- vim.keymap.set('n', '<Leader>dt', function() require('dap-python').test_method() end)
+    -- vim.keymap.set('n', '<Leader>dc', function() require('dap-python').test_class() end)
+    -- vim.keymap.set('n', '<Leader>ds', function() require('dap-python').debug_selection() end)
 end
 
 return M

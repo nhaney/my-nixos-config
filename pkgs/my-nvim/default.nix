@@ -17,6 +17,7 @@
   makeNeovimConfigOverrides ? { },
   # Base packages required.
   ripgrep,
+  fd,
   fzf,
   markdown-oxide,
   ...
@@ -66,6 +67,7 @@ let
         # Used for search
         ripgrep
         fzf
+        fd
         # Markdown language server
         markdown-oxide
       ];
@@ -107,6 +109,7 @@ let
         nvim-dap
         nvim-dap-ui
         nvim-dap-virtual-text
+        nvim-nio
 
         # Formatting
         conform-nvim
