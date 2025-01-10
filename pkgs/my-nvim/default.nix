@@ -33,7 +33,7 @@ let
         enable = true;
       };
       dotnet = {
-        enable = true;
+        enable = false;
       };
       python = {
         enable = true;
