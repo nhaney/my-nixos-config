@@ -5,7 +5,7 @@ vim.g.maplocalleader = ','
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'Go to next buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Go to previous buffer' })
-vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Close current buffer' })
+vim.keymap.set('n', '<leader>bd', '<cmd>bdelete!<CR>', { desc = 'Close current buffer' })
 vim.keymap.set('n', '<leader>bx', '<cmd>%bd|e#|bd#<CR>', { desc = 'Close all buffers except current' })
 
 

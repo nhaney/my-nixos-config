@@ -9,7 +9,7 @@ require 'my-nvim-config'.setup({
             nixPkgsFlakePath = "/home/nigel/my-nixos-config",
         },
         dotnet = {
-            enable = true,
+            enable = false,
         },
         python = {
             enable = true,
