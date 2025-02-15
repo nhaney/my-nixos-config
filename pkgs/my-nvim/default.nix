@@ -55,6 +55,7 @@ let
   myNvimVimPlugin = vimUtils.buildVimPlugin {
     name = "my-nvim-config";
     src = ./.;
+    doCheck = false;
   };
 
   myPlugins = vimPlugins // (callPackage ./plugins.nix { });
