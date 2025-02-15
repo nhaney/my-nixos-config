@@ -159,7 +159,7 @@ rec {
 
           customRC = ''
             lua << EOF
-                require 'my-nvim-config'.init ${lib.generators.toLua { multiline = false; } finalMyNvimConfig}
+                require 'my-nvim-config'.setup ${lib.generators.toLua { multiline = false; } finalMyNvimConfig}
             EOF
           '';
 
