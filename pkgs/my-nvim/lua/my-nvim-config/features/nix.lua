@@ -18,6 +18,7 @@ function M.setup(config)
         },
         settings = {
             nixpkgs = {
+                -- TODO: Make this throw a better exception or just ignore this setting if the path is not set.
                 -- We want this to be parameterized so we can choose the correct nixpkgs for the flake that
                 -- the project is a part of.
                 expr = "import (builtins.getFlake \"" .. config.nixPkgsFlakePath .. "\").inputs.nixpkgs",
