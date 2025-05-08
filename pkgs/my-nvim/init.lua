@@ -16,6 +16,9 @@ require 'my-nvim-config'.setup({
         },
         llm = {
             enable = true,
+        },
+        cpp = {
+            enable = true,
         }
     },
 })

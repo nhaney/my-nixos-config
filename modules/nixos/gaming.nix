@@ -1,4 +1,4 @@
-{ slippi, ... }:
+{ pkgs, slippi, ... }:
 {
 
   # Needed for melee (gc controller support/overclock)
@@ -18,5 +18,10 @@
       type = "-";
       value = "unlimited";
     }
+  ];
+
+  environment.systemPackages = with pkgs; [
+    # Gaming overlay.
+    mangohud
   ];
 }

@@ -1,12 +1,12 @@
 {
   lib,
   features,
-  nodejs-18_x,
+  nodejs,
   vimPlugins,
 }:
 {
   packages = lib.optionals features.llm.enable [
-    nodejs-18_x
+    nodejs
   ];
 
   plugins = lib.optionals features.llm.enable [

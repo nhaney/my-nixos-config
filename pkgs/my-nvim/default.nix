@@ -41,6 +41,9 @@ let
       llm = {
         enable = true;
       };
+      cpp = {
+        enable = true;
+      };
     };
   };
 
@@ -69,7 +72,8 @@ let
         ripgrep
         fzf
         fd
-        # Markdown language server
+
+        # Markdown language server. Always used.
         markdown-oxide
       ];
     in
@@ -78,6 +82,7 @@ let
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/python-dev.nix { features = config.features; }).packages
+    ++ (callPackage ./features/cpp-dev.nix { features = config.features; }).packages
     ++ (callPackage ./features/llm.nix { features = config.features; }).packages;
 
   # Given a configuration, return the nix packages neovim plugins that are required.
@@ -138,6 +143,7 @@ let
     ++ (callPackage ./features/nix-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/dotnet-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/python-dev.nix { features = config.features; }).plugins
+    ++ (callPackage ./features/cpp-dev.nix { features = config.features; }).plugins
     ++ (callPackage ./features/llm.nix { features = config.features; }).plugins;
 
   extraPackages = pkgsForConfig finalMyNvimConfig;

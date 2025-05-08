@@ -96,6 +96,11 @@ function M.setup()
 		end,
 	})
 
+	-- Show diagnostics in virtual text off to the side and toggle them for a floating window.
+	vim.diagnostic.config({ virtual_text = true })
+	vim.keymap.set("n", "<leader>p", function() vim.diagnostic.open_float() end,
+		{ desc = 'Diagnostics: Toggle floating window.' })
+
 	-- Change diagnostic symbols in the sign column (gutter)
 	if vim.g.have_nerd_font then
 		local signs = { Error = '', Warn = '', Hint = '', Info = '' }

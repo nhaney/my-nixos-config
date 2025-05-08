@@ -21,5 +21,4 @@ vim.api.nvim_command("cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline(
 -- TODO: Make this more generic or use a plugin. With netrw disabled this is how to open links.
 vim.keymap.set("n", "gx", [[:silent execute 'firefox ' . shellescape(expand('<cfile>'), 1)<CR>]])
 
-
 vim.keymap.set("n", "<leader>?", function() require('which-key').show({ global = false }) end)

@@ -1,4 +1,5 @@
 # Various CLI tools that I use and their configs.
+{ pkgs, ... }:
 {
   programs.fzf.enable = true;
 
@@ -13,4 +14,12 @@
     enable = true;
     enableFishIntegration = true;
   };
+
+  home.packages = [
+    pkgs.unzip
+    pkgs.jq
+    # For using wine and running windows applications on linux.
+    pkgs.wineWowPackages.stable
+    pkgs.winetricks
+  ];
 }

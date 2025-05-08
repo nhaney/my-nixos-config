@@ -30,6 +30,10 @@ function M.setup(config)
         require 'my-nvim-config.features.python'.setup(config.features.python)
     end
 
+    if config.features.cpp.enable then
+        require 'my-nvim-config.features.cpp'.setup()
+    end
+
     if config.features.llm.enable then
         require 'my-nvim-config.llm'.setup()
     end
