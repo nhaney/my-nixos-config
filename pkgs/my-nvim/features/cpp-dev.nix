@@ -5,7 +5,7 @@
   lldb,
   vscode-extensions,
   writeShellScriptBin,
-# vimPlugins,
+  vimPlugins,
 }:
 let
   # Wrap codelldb so that neovim can just call it as an executable as per most examples.
@@ -25,6 +25,10 @@ in
     codelldbCommand
   ];
 
-  plugins = lib.optionals features.cpp.enable [
-  ];
+  plugins = lib.optionals features.cpp.enable (
+    with vimPlugins;
+    [
+      cmake-tools-nvim
+    ]
+  );
 }

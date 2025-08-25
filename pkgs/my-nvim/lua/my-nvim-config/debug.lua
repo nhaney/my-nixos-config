@@ -12,8 +12,6 @@
 --     linehl = '',
 --     numhl = 'SpellBad'
 -- })
-
-
 require("nvim-dap-virtual-text").setup()
 
 local dap = require('dap')

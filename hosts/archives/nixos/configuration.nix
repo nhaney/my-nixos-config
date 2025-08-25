@@ -39,8 +39,6 @@
   services.tailscale.enable = true;
   networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
-
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

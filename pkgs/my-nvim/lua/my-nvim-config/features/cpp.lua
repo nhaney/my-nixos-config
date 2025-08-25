@@ -19,19 +19,25 @@ function M.setup()
         }
     };
 
-    dap.configurations.cpp = {
-        {
-            name = 'Launch file',
-            type = 'codelldb',
-            request = 'launch',
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            cwd = '${workspaceFolder}',
-            stopOnEntry = false,
-            args = {},
+    require("cmake-tools").setup {
+        cmake_generate_options = {
+            -- Generates compile commands used by LSP.
+            "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+            -- Options used by some of my projects for enabling tests in build
+            -- TODO: Allow these options to be passed into config instead of just putting them here.
+            "-DBUILD_TESTS=ON"
         },
-    };
+        cmake_dap_configuration = {
+            name = "cpp",
+            type = "codelldb",
+            request = "launch",
+            stopOnEntry = false,
+            runInTerminal = false,
+            console = "integratedTerminal",
+            -- Break on exception thrown.
+            initCommands = { "breakpoint set -E c++" }
+        },
+    }
 end
 
 return M
