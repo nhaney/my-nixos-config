@@ -30,6 +30,12 @@
       url = "github:lytedev/slippi-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Used for i3 compatibility with KDE Plasma
+    fakwin = {
+      url = "github:DMaroo/fakwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -40,6 +46,7 @@
       firefox-addons,
       stylix,
       slippi,
+      fakwin,
     }@inputs:
     let
       inherit (self) outputs;
@@ -64,6 +71,7 @@
           specialArgs = {
             inherit inputs outputs;
             inherit slippi;
+            inherit fakwin;
           };
           modules = [
             ./hosts/firelink/nixos

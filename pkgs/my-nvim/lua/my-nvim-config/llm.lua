@@ -10,7 +10,7 @@ function M.setup(config)
     })
 
     -- disable copilot by default, enable it with :Copilot enable if I want it.
-    vim.g.copilot_enabled = false
+    -- vim.g.copilot_enabled = false
 end
 
 return M

@@ -6,7 +6,7 @@
     ./vscode.nix
     ./media-player.nix
     ./wm
-    ./theme
+    # ./theme
     ./gaming
   ];
 }

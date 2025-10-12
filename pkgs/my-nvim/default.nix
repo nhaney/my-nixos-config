@@ -28,19 +28,25 @@ let
   baseConfig = {
     greeting = "base greeting from package.";
     features = {
+      # Used for developing neovim plugins.
       neovimDev.enable = true;
+      # Used for nix language support.
       nix = {
         enable = true;
       };
+      # Used for .NET language support.
       dotnet = {
         enable = false;
       };
+      # Used for python language support.
       python = {
         enable = true;
       };
+      # Used for LLM plugins.
       llm = {
         enable = true;
       };
+      # Used for C++ language support.
       cpp = {
         enable = true;
       };
@@ -68,7 +74,7 @@ let
     config:
     let
       basePackages = [
-        # Used for search
+        # Used for search plugins/functionality.
         ripgrep
         fzf
         fd

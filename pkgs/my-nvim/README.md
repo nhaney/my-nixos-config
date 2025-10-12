@@ -14,6 +14,7 @@
 
 ### Dependency installation done with nix
 
+All plugins and packages are installed based on enabled features.
 
 ### Lua-centric neovim configuration
 
@@ -23,7 +24,7 @@
 * Configuration passed into nix function to create app will identify all extra packages (e.g. language servers)
 * Easy development with a custom neovim app name setup in home-manager for quicker scripting/iterations.
 
-### Neovim in nixpkgs
+### Neovim in nixpkgs (possibly outdated)
 
 In [all-packages.nix](https://github.com/NixOS/nixpkgs/blob/768ddf7007a154a502f22fb31e08302ae4154b27/pkgs/top-level/all-packages.nix) there
 is currently :
@@ -45,12 +46,18 @@ https://github.com/viperML/dotfiles/blob/098fb8c32498cedb30be69562ec99137eb32d5d
 
 Also look at what home manager does: https://github.com/nix-community/home-manager/blob/5ec753a1fc4454df9285d8b3ec0809234defb975/modules/programs/neovim.nix
 
-#### Ideas after research
+## Next steps
 
-* Create a wrapper function over wrapNeovimUnstable and makeNeovimConfig that takes a simple attrset that is the main configuration entrypoint.
-    * The configuration should be able to be easily expanded in the future.
-    * The proper nix packages are installed based on the configuration for external dev tools (e.g. LSPs, debug servers, etc.)
-    * The proper vim plugins are installed.
-    * A home manager module is exposed which allows for the dev version of the neovim config to be defined that can be hot-reloaded with the out of store symlink functionality.
-    * The wrapper can be used to install a neovim derivation specific to any project with only the required dependencies. This will be referenced from my
+### Trim the fat of my neovim config. need something more lightweight for server.
 
+* Essentials
+    * Syntax highlighting
+    * Telescope
+    * Oil
+    * keybindings/options
+* Coding features:
+    * 
+* Stuff I can get rid of:
+    * Bottom bar.
+    * Top bar.
+    * conform?

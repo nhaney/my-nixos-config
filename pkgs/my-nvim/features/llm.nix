@@ -11,6 +11,6 @@
 
   plugins = lib.optionals features.llm.enable [
     vimPlugins.avante-nvim
-    vimPlugins.copilot-vim
+    # vimPlugins.copilot-vim
   ];
 }
