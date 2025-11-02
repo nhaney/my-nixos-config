@@ -140,6 +140,7 @@
     home-manager
     pavucontrol
     tailscale
+    dig
   ];
 
   hardware.bluetooth.enable = true;
