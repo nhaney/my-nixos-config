@@ -6,7 +6,6 @@
   pkgs,
   ...
 }:
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -36,7 +35,11 @@
   networking.networkmanager.enable = true;
 
   # Tailscale networking
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+  };
+
   networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
   # List packages installed in system profile. To search, run:
@@ -47,6 +50,8 @@
     git
     curl
     home-manager
+    dig
+    caddy
   ];
 
   system.stateVersion = "24.05";
@@ -57,4 +62,31 @@
     "nix-command"
     "flakes"
   ];
+
+  # Caddy webserver setup.
+
+  services.caddy = {
+    enable = true;
+
+    virtualHosts = {
+      "notes.archives.tail68797.ts.net" = {
+        extraConfig = ''
+          reverse_proxy localhost:3000
+        '';
+      };
+    };
+  };
+
+  networking.firewall = {
+    # Allow traffic to the webserver on 80/443 on tailscale interface.
+    interfaces.tailscale0 = {
+      allowedTCPPorts = [
+        80
+        443
+      ];
+    };
+    # No public access. (doesn't work anyway because I have a Hetzner firewall here.)
+    allowedTCPPorts = [ ];
+  };
+
 }
