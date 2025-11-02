@@ -64,17 +64,19 @@
   ];
 
   # Caddy webserver setup.
-
   services.caddy = {
     enable = true;
-
-    virtualHosts = {
-      "notes.archives.tail68797.ts.net" = {
-        extraConfig = ''
-          reverse_proxy localhost:3000
-        '';
-      };
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/cloudflare@v0.2.2" ];
+      hash = "sha256-GkmhBeHiuwdpRUDBPG9TRHqLvGnsxltPZMQ9CcRcdGA=";
     };
+
+    configFile = ./Caddyfile;
+
+    # Secrets for caddy. This needs to be manually generated on the host.
+    # Make sure the caddy user has permission to read this file.
+    # TODO: Migrate to sops-nix.
+    environmentFile = "/etc/secrets/caddy.env";
   };
 
   networking.firewall = {

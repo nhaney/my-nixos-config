@@ -1,0 +1,11 @@
+(cloudflare) {
+    tls {
+        dns cloudflare {env.CF_API_TOKEN}
+    }
+}
+
+# Notes app.
+notes.nigelhaney.com {
+    reverse_proxy http://localhost:3000
+    import cloudflare
+}
