@@ -12,13 +12,13 @@ require 'my-nvim-config'.setup({
             enable = false,
         },
         python = {
-            enable = true,
+            enable = false,
         },
         llm = {
-            enable = true,
+            enable = false,
         },
         cpp = {
-            enable = true,
+            enable = false,
         }
     },
 })

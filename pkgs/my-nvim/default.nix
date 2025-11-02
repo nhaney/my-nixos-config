@@ -1,5 +1,4 @@
-# Idea:
-# This module will take a custom configuration that
+# Idealib.traceVal# This module will take a custom configuration that
 # will be passed to the lua code as a table after it
 # has been processed by the various nix functions needed
 # to successfully create the neovim derivation/package.
@@ -28,8 +27,8 @@ let
   baseConfig = {
     greeting = "base greeting from package.";
     features = {
-      # Used for developing neovim plugins.
-      neovimDev.enable = true;
+      # Used for developing neovim plugins/working on vim config.
+      neovimDev.enable = false;
       # Used for nix language support.
       nix = {
         enable = true;
@@ -40,15 +39,15 @@ let
       };
       # Used for python language support.
       python = {
-        enable = true;
+        enable = false;
       };
       # Used for LLM plugins.
       llm = {
-        enable = true;
+        enable = false;
       };
       # Used for C++ language support.
       cpp = {
-        enable = true;
+        enable = false;
       };
     };
   };
@@ -57,8 +56,12 @@ let
   # TODO: Maybe just have this be a comment as an example?
   fullConfig = { };
 
+  myNvimConfigFromArgs = lib.traceVal myNvimConfig;
+
   # The config to be used by the rest of this derivation.
-  finalMyNvimConfig = baseConfig // myNvimConfig;
+  finalMyNvimConfig = builtins.trace (lib.generators.toPretty { } (
+    lib.recursiveUpdate baseConfig myNvimConfigFromArgs
+  )) (lib.recursiveUpdate baseConfig myNvimConfigFromArgs);
 
   # Neovim plugin that is built from the lua files in this directory.
   myNvimVimPlugin = vimUtils.buildVimPlugin {
@@ -79,7 +82,7 @@ let
         fzf
         fd
 
-        # Markdown language server. Always used.
+        # Markdown language server. Always used for writing markdown.
         markdown-oxide
       ];
     in

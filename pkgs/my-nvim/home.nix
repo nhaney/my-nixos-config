@@ -6,32 +6,12 @@
   ...
 }:
 let
-  # The base config with no optional features added.
-  baseConfig = {
-    greeting = "base greeting from package.";
-    features = {
-      neovimDev.enable = true;
-      nix.enable = true;
-    };
-  };
-
   cfg = config.programs.my-nvim;
 in
 {
   options = {
     programs.my-nvim = {
       enable = lib.mkEnableOption "MyNeovim";
-
-      pathToMyNvimSource = lib.mkOption {
-        type = lib.types.path;
-        description = ''
-          The path to the source of the MyNeovim plugin. This option specifies
-          the path where the lua config is sourced from instead
-          of the wrapped neovim from the MyNeovim package. This allows for the hot-reloading
-          of lua neovim config without rebuilding nix. For example, this could be in
-          "/home/<username>/my-nixos-config/pkgs/my-nvim".
-        '';
-      };
 
       defaultEditor = lib.mkOption {
         type = lib.types.bool;
@@ -52,11 +32,36 @@ in
           option.
         '';
       };
+
+      pathToMyNvimSource = lib.mkOption {
+        type = lib.types.path;
+        description = ''
+          The path to the source of the MyNeovim plugin. This option specifies
+          the path where the lua config is sourced from instead
+          of the wrapped neovim from the MyNeovim package. This allows for the hot-reloading
+          of lua neovim config without rebuilding nix. For example, this could be in
+          "/home/<username>/my-nixos-config/pkgs/my-nvim". Nix config will only need to be rebuilt
+          if a new package or plugin is installed.
+
+          In the future, this option could be made optional if I don't want to tinker w/ my config (unlikely).
+        '';
+      };
+
+      config = lib.mkOption {
+        type = lib.types.attrsOf lib.types.anything;
+        default = {
+          greeting = "base greeting from hm module.";
+          features = {
+            nix.enable = true;
+          };
+        };
+        description = "Configuration passed in to make neovim config. See full example default.nix.";
+      };
     };
   };
   config =
     let
-      neovimConfig = (pkgs.callPackage ./default.nix baseConfig).neovimConfig;
+      neovimConfig = (pkgs.callPackage ./default.nix { myNvimConfig = cfg.config; }).neovimConfig;
 
       # We want to make sure that the neovim is wrapped with NVIM_APPNAME specified by the options
       # and that it has all of the other options set as specified.

@@ -70,7 +70,6 @@
       # styling
       set-option -g status-left "#{?window_zoomed_flag, 🔍 ,}"
 
-
       # sesh configuration - https://github.com/joshmedeski/sesh
       bind-key "T" run-shell "${pkgs.sesh}/bin/sesh connect \"$(
         ${pkgs.sesh}/bin/sesh list --icons | ${pkgs.fzf}/bin/fzf-tmux -p 55%,60% \
