@@ -4,8 +4,15 @@
     }
 }
 
-# Notes app.
+# Notes app (silverbullet)
 notes.nigelhaney.com {
     reverse_proxy http://localhost:3000
+    import cloudflare
+}
+
+
+# Budget app (actual)
+budget.nigelhaney.com {
+    reverse_proxy http://localhost:3001
     import cloudflare
 }

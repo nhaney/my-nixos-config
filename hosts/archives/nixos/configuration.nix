@@ -91,4 +91,20 @@
     allowedTCPPorts = [ ];
   };
 
+  # Actual server.
+  services.actual = {
+    enable = true;
+    settings = {
+      port = 3001;
+      dataDir = "/var/lib/actual";
+    };
+  };
+
+  # enable swap, only 2G ram on this VPS so this is helpful.
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 2048;
+    }
+  ];
 }
