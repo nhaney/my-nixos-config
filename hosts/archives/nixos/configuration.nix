@@ -52,6 +52,7 @@
     home-manager
     dig
     caddy
+    restic
   ];
 
   system.stateVersion = "24.05";
@@ -97,6 +98,44 @@
     settings = {
       port = 3001;
       dataDir = "/var/lib/actual";
+    };
+  };
+
+  # Backups for self-hosted services (Restic + Backblaze).
+  services.restic = {
+    backups.services = {
+      paths = [
+        "/var/lib/silverbullet"
+        "/var/lib/private/actual"
+      ];
+
+      repository = "s3:s3.us-west-004.backblazeb2.com/nigel-service-backup";
+
+      # TODO: Hook this up w/ nix secret management instead of manually generating it.
+      passwordFile = "/etc/secrets/restic.pass";
+
+      # This needs to contain (some may not be needed):
+      # AWS_DEFAULT_REGION
+      # AWS_ACCESS_KEY_ID
+      # AWS_SECRET_ACCESS_KEY
+      # AWS_ENDPOINT
+      # RESTIC_REPOSITORY
+      # RESTIC_PASSWORD_FILE
+      environmentFile = "/etc/secrets/restic.env";
+
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+      };
+
+      pruneOpts = [
+        # Keep daily for the last week.
+        "--keep-daily 7"
+        # Keey 1 snapshot per week for the last 4 weeks.
+        "--keep-weekly 4"
+        # Keep 1 snapshot per month for the last 6 months.
+        "--keep-monthly 6"
+      ];
     };
   };
 
