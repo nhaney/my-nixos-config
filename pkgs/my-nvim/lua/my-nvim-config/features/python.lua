@@ -3,8 +3,11 @@ M = {}
 function M.setup()
     -- LSP configuration. Using ruff for linting/formatting and basedpyright for typechecking.
     local capabilities = require('my-nvim-config.lsp').get_capabilities()
-    require 'lspconfig'.ruff.setup { capabilities = capabilities }
-    require 'lspconfig'.basedpyright.setup { capabilities = capabilities }
+    vim.lsp.config("ruff", { capabilities = capabilities })
+    vim.lsp.enable("ruff")
+
+    vim.lsp.config("basedpyright", { capabilities = capabilities })
+    vim.lsp.enable("basedpyright")
 
     local pythonPath = vim.fn.exepath('python')
 

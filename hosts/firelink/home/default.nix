@@ -6,5 +6,4 @@
 
   home.username = "nigel";
   home.homeDirectory = "/home/nigel";
-
 }

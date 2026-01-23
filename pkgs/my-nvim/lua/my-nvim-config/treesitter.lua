@@ -1,32 +1,39 @@
-M = {}
+local M = {}
 
 function M.setup()
-    require 'nvim-treesitter.configs'.setup {
-        -- We are managing our treesitter parsers with nix instead of with the built-in parser management.
-        ensure_installed = {},
-        auto_install = false,
+  local max_filesize = 100 * 1024 -- 100 KB
 
-        highlight = {
-            enable = true,
-            disable = function(_, buf)
-                local max_filesize = 100 * 1024 -- 100 KB
-                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    return true
-                end
-            end,
+  local function should_disable(buf)
+    local ok, stats = pcall(
+      vim.loop.fs_stat,
+      vim.api.nvim_buf_get_name(buf)
+    )
+    return ok and stats and stats.size > max_filesize
+  end
 
-            -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-            -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-            -- Using this option may slow down your editor, and you may see some duplicate highlights.
-            -- Instead of true it can also be a list of languages
-            additional_vim_regex_highlighting = false,
-        },
-        indent = {
-            enable = true,
-            disable = { 'html' },
-        },
-    }
+  -- Enable Tree-sitter highlighting + indent on buffer attach as long as file isn't too big.
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+      local buf = args.buf
+
+      if should_disable(buf) then
+        return
+      end
+
+      -- Start Tree-sitter highlighting
+      -- Language is inferred automatically from FileType
+      pcall(vim.treesitter.start, buf)
+
+      -- Disable regex-based :syntax highlighting
+      vim.bo[buf].syntax = "off"
+
+      -- Enable Tree-sitter indentation except for html
+      if vim.bo[buf].filetype ~= "html" then
+        vim.bo[buf].indentexpr = "v:lua.vim.treesitter.indent()"
+      end
+    end,
+  })
 end
 
 return M
+

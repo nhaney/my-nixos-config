@@ -1,11 +1,11 @@
 require('render-markdown').setup({
-    file_types = { "markdown", "Avante" },
+    file_types = { "markdown", },
 })
 
 -- An example nvim-lspconfig capabilities setting
 local capabilities = require('my-nvim-config.lsp').get_capabilities()
 
-require("lspconfig").markdown_oxide.setup({
+vim.lsp.config("markdown_oxide", {
     -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
     -- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
     capabilities = vim.tbl_deep_extend(
@@ -20,3 +20,5 @@ require("lspconfig").markdown_oxide.setup({
         }
     )
 })
+
+vim.lsp.enable("markdown_oxide")
