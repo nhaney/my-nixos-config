@@ -72,7 +72,25 @@
       hash = "sha256-GkmhBeHiuwdpRUDBPG9TRHqLvGnsxltPZMQ9CcRcdGA=";
     };
 
-    configFile = ./Caddyfile;
+    virtualHosts = {
+      "notes.nigelhaney.com" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:3000
+          tls {
+            dns cloudflare {env.CF_API_TOKEN}
+          }
+        '';
+      };
+
+      "budget.nigelhaney.com" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:3001
+          tls {
+            dns cloudflare {env.CF_API_TOKEN}
+          }
+        '';
+      };
+    };
 
     # Secrets for caddy. This needs to be manually generated on the host.
     # Make sure the caddy user has permission to read this file.
