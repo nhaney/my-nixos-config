@@ -1,3 +1,4 @@
 **/*.swp
 # don't commit melee iso
 ssbm.iso
+result
