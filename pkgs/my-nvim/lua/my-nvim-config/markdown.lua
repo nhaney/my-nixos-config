@@ -1,7 +1,3 @@
-require('render-markdown').setup({
-    file_types = { "markdown", },
-})
-
 -- An example nvim-lspconfig capabilities setting
 local capabilities = require('my-nvim-config.lsp').get_capabilities()
 

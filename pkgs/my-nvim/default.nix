@@ -1,4 +1,4 @@
-# Idealib.traceVal# This module will take a custom configuration that
+# This module will take a custom configuration that
 # will be passed to the lua code as a table after it
 # has been processed by the various nix functions needed
 # to successfully create the neovim derivation/package.
@@ -136,7 +136,6 @@ let
         oil-nvim
 
         # Markdown
-        render-markdown-nvim
         zen-mode-nvim
 
         # Buffer and status lines
